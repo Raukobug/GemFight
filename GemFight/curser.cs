@@ -8,48 +8,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
 {
-    public class curser : Sprite, IInputGamePadDigitalDpad, IInputGamePadButtons, ICollidable
+    public class Curser : Sprite, IInputGamePadDigitalDpad, IInputGamePadButtons, ICollidable
     {
-        private Sprite SelectedSprite = null;
-        private Board _theBoard = Board.GetInstance();
-        public curser(Texture2D spriteTexture, Vector2 position) : base(spriteTexture, position)
+        private Sprite _selectedSprite = null;
+        private readonly Board _theBoard = Board.GetInstance();
+        public Curser(Texture2D spriteTexture, Vector2 position) : base(spriteTexture, position)
         {
-        }
-
-        public void LeftStickMove(Vector2 moveVector)
-        {
-            if (moveVector.X > 0.5)
-            {
-                PositionX = PositionX + 96;
-                if (PositionX > 96 * 6 + 3)
-                {
-                    PositionX = 96 * 6 + 3;
-                }
-            }
-            if (moveVector.X < -0.5)
-            {
-                PositionX = PositionX - 96;
-                if (PositionX < 99)
-                {
-                    PositionX = 99;
-                }
-            }
-            if (moveVector.Y > 0.5)
-            {
-                PositionY = PositionY - 94;
-                if (PositionY < 97)
-                {
-                    PositionY = 97;
-                }
-            }
-            if (moveVector.Y < -0.5)
-            {
-                PositionY = PositionY + 94;
-                if (PositionY > 94 * 6 + 3)
-                {
-                    PositionY = 94*6+3;
-                }
-            }
         }
 
         public void ButtonDpadDownPressed(InputController.ButtonStates buttonStates)
@@ -57,12 +21,12 @@ namespace GemFight
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
                 PositionY = PositionY + 94;
-                if (PositionY > 94 * 6 + 3)
+                if (PositionY > _theBoard.EndPointy)
                 {
-                    PositionY = 94 * 6 + 3;
-                }      
+                    PositionY = _theBoard.EndPointy-1;
+                }
             }
-
+            _selectedSprite = null;
         }
 
         public void ButtonDpadUpPressed(InputController.ButtonStates buttonStates)
@@ -70,35 +34,38 @@ namespace GemFight
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
                 PositionY = PositionY - 94;
-                if (PositionY < 97)
+                if (PositionY < _theBoard.StartPointy + 93)
                 {
-                    PositionY = 97;
+                    PositionY = _theBoard.StartPointy + 93;
                 }
             }
+            _selectedSprite = null;
         }
 
         public void ButtonDpadLeftPressed(InputController.ButtonStates buttonStates)
         {
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                PositionX = PositionX - 96;
-                if (PositionX < 99)
+                PositionX = PositionX - 97;
+                if (PositionX < _theBoard.StartPointx + 95)
                 {
-                    PositionX = 99;
+                    PositionX = _theBoard.StartPointx + 95;
                 }
             }
+            _selectedSprite = null;
         }
 
         public void ButtonDpadRightPressed(InputController.ButtonStates buttonStates)
         {
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                PositionX = PositionX + 96;
-                if (PositionX > 96*6 + 3)
+                PositionX = PositionX + 97;
+                if (PositionX > _theBoard.EndPointx)
                 {
-                    PositionX = 96*6 + 3;
+                    PositionX = _theBoard.EndPointx-1;
                 }
             }
+            _selectedSprite = null;
         }
 
         public void ButtonADown(InputController.ButtonStates buttonStates)
@@ -106,51 +73,24 @@ namespace GemFight
             Game1 game = Game1.GetInstance();
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                game.ListOfGems.Remove((Gem)SelectedSprite);
+                game.ListOfGems.Remove((Gem)_selectedSprite);
                 if (game.ListOfGems.Count <= 12)
                 {
                     _theBoard.GenerateGems();
-                }      
+                }
             }
         }
 
         public void ButtonBDown(InputController.ButtonStates buttonStates)
         {
-            Game1 game = Game1.GetInstance();
-            if (buttonStates == InputController.ButtonStates.JustPressed)
-            {
-                game.ListOfGems.Remove((Gem)SelectedSprite);
-                if (game.ListOfGems.Count <= 12)
-                {
-                    _theBoard.GenerateGems();
-                }
-            }
         }
 
         public void ButtonXDown(InputController.ButtonStates buttonStates)
         {
-            Game1 game = Game1.GetInstance();
-            if (buttonStates == InputController.ButtonStates.JustPressed)
-            {
-                game.ListOfGems.Remove((Gem)SelectedSprite);
-                if (game.ListOfGems.Count <= 12)
-                {
-                    _theBoard.GenerateGems();
-                }
-            }
         }
 
         public void ButtonYDown(InputController.ButtonStates buttonStates)
         {
-            Game1 game = Game1.GetInstance();
-            if (buttonStates == InputController.ButtonStates.JustPressed)
-            {
-                game.ListOfGems.Remove((Gem)SelectedSprite);
-                if (game.ListOfGems.Count <= 12)
-                {
-                    _theBoard.GenerateGems();
-                }
-            }
         }
 
         public void ButtonLeftShoulderDown(InputController.ButtonStates buttonStates)
@@ -187,7 +127,7 @@ namespace GemFight
         {
             if (BoundingBox.Intersects(other.BoundingBox))
             {
-                SelectedSprite = other;
+                _selectedSprite = other;
             }
         }
 

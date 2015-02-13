@@ -9,32 +9,33 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
 {
-    public class Monk : Sprite, IInputGamePadButtons
+    public class Wizard : Sprite, IInputGamePadButtons
     {
         public List<Curser> CurserList = new List<Curser>();
         private readonly Game1 _game = Game1.GetInstance();
         private readonly Board _theBoard = Board.GetInstance();
         private int _selectCursorSetup = 1;
-        public Monk(Texture2D spriteTexture, Vector2 position) : base(spriteTexture, position)
+        public Wizard(Texture2D spriteTexture, Vector2 position)
+            : base(spriteTexture, position)
         {
-            
+
         }
 
         public void CursorSetup1()
         {
-            if (_game.Player1Turn) { 
-            _game.Cursor1.Position(_theBoard.Pos[0]);
-            _game.Cursor2.Position(_theBoard.Pos[7]);
-            _game.Cursor3.Position(_theBoard.Pos[12]);
-            _game.Cursor4.Position(_theBoard.Pos[14]);
-            _game.Cursor5.Position(_theBoard.Pos[19]);
-            _game.Cursor6.Position(_theBoard.Pos[26]);
+            if (!_game.Player1Turn) {
+            _game.Cursor1.Position(_theBoard.Pos[12]);
+            _game.Cursor2.Position(_theBoard.Pos[13]);
+            _game.Cursor3.Position(_theBoard.Pos[8]);
+            _game.Cursor4.Position(_theBoard.Pos[9]);
+            _game.Cursor5.Position(_theBoard.Pos[4]);
+            _game.Cursor6.Position(_theBoard.Pos[5]);
             _selectCursorSetup = 1;
             }
         }
         public void CursorSetup2()
         {
-            if (_game.Player1Turn)
+            if (!_game.Player1Turn)
             {
                 _game.Cursor1.Position(_theBoard.Pos[0]);
                 _game.Cursor2.Position(_theBoard.Pos[6]);
@@ -47,7 +48,7 @@ namespace GemFight
         }
         public void CursorSetup3()
         {
-            if (_game.Player1Turn)
+            if (!_game.Player1Turn)
             {
                 _game.Cursor1.Position(_theBoard.Pos[0]);
                 _game.Cursor2.Position(_theBoard.Pos[1]);
@@ -61,10 +62,10 @@ namespace GemFight
 
         public void ButtonADown(InputController.ButtonStates buttonStates)
         {
-            if (_game.Player1Turn && buttonStates == InputController.ButtonStates.JustPressed)
+            if (!_game.Player1Turn && buttonStates == InputController.ButtonStates.JustPressed)
             {
-            _game.Player1Turn = false;
-            _game.Wizard.CursorSetup1();
+                _game.Player1Turn = true;
+                _game.Monk.CursorSetup1();                
             }
         }
 
@@ -85,7 +86,7 @@ namespace GemFight
 
         public void ButtonLeftShoulderDown(InputController.ButtonStates buttonStates)
         {
-            if (_game.Player1Turn)
+            if (!_game.Player1Turn)
             {
                 if (buttonStates == InputController.ButtonStates.JustPressed)
                 {
@@ -107,7 +108,7 @@ namespace GemFight
 
         public void ButtonRightShoulderDown(InputController.ButtonStates buttonStates)
         {
-            if (_game.Player1Turn)
+            if (!_game.Player1Turn)
             {
                 if (buttonStates == InputController.ButtonStates.JustPressed)
                 {

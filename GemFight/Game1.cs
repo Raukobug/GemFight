@@ -22,33 +22,35 @@ namespace GemFight
     /// </summary>
     public class Game1 : Game
     {
-        private static Game1 Instance = null;
-        GraphicsDeviceManager _graphics;
+        public bool Player1Turn = true;
+        private static Game1 _instance = null;
+        public GraphicsDeviceManager Graphics;
         SpriteBatch _spriteBatch;
         public List<Gem> ListOfGems = new List<Gem>();
-        public InputController _inputController1 = new InputController(PlayerIndex.One);
-        public ColissionHandler _colissionHandler;
-        public List<Sprite> _sprites = new List<Sprite>();
-        public List<curser> listofCursers = new List<curser>();
+        public InputController InputController1 = new InputController(PlayerIndex.One);
+        public ColissionHandler ColissionHandler;
+        public List<Sprite> Sprites = new List<Sprite>();
+        public List<Curser> ListofCursers = new List<Curser>();
         public Board TheBoard;
-        private Monk monk;
-        public curser Cursor1;
-        public curser Cursor2;
-        public curser Cursor3;
-        public curser Cursor4;
-        public curser Cursor5;
-        public curser Cursor6;
+        public Monk Monk;
+        public Wizard Wizard;
+        public Curser Cursor1;
+        public Curser Cursor2;
+        public Curser Cursor3;
+        public Curser Cursor4;
+        public Curser Cursor5;
+        public Curser Cursor6;
 
         private Game1()
             : base()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
         public static Game1 GetInstance()
         {
-            return Instance ?? (Instance = new Game1());
+            return _instance ?? (_instance = new Game1());
         }
 
         /// <summary>
@@ -63,9 +65,9 @@ namespace GemFight
             var screen = Screen.AllScreens.First(e => e.Primary);
             Window.IsBorderless = true;
             Window.Position = new Point(screen.Bounds.X, screen.Bounds.Y);
-            _graphics.PreferredBackBufferWidth = screen.Bounds.Width;
-            _graphics.PreferredBackBufferHeight = screen.Bounds.Height;
-            _graphics.ApplyChanges();
+            Graphics.PreferredBackBufferWidth = screen.Bounds.Width;
+            Graphics.PreferredBackBufferHeight = screen.Bounds.Height;
+            Graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -78,27 +80,29 @@ namespace GemFight
             // Create a new SpriteBatch, which can be used to draw textures.
             TheBoard = Board.GetInstance();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            monk = new Monk(Content.Load<Texture2D>("monk.png"),new Vector2(800,0));
-            Cursor1 = new curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[0]);
-            Cursor2 = new curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[7]);
-            Cursor3 = new curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[12]);
-            Cursor4 = new curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[14]);
-            Cursor5 = new curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[19]);
-            Cursor6 = new curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[26]);
-            listofCursers.Add(Cursor1);
-            listofCursers.Add(Cursor2);
-            listofCursers.Add(Cursor3);
-            listofCursers.Add(Cursor4);
-            listofCursers.Add(Cursor5);
-            listofCursers.Add(Cursor6);
-            _inputController1.InputGamePadButtonListeners.Add(monk);
-            _colissionHandler = new ColissionHandler(_sprites);
-            foreach (var curser in listofCursers)
+            Monk = new Monk(Content.Load<Texture2D>("monk.png"),new Vector2(0,50));
+            Wizard = new Wizard(Content.Load<Texture2D>("wizard.png"), new Vector2(Graphics.PreferredBackBufferWidth-475,14));
+            Cursor1 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[0]);
+            Cursor2 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[7]);
+            Cursor3 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[12]);
+            Cursor4 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[14]);
+            Cursor5 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[19]);
+            Cursor6 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[26]);
+            ListofCursers.Add(Cursor1);
+            ListofCursers.Add(Cursor2);
+            ListofCursers.Add(Cursor3);
+            ListofCursers.Add(Cursor4);
+            ListofCursers.Add(Cursor5);
+            ListofCursers.Add(Cursor6);
+            InputController1.InputGamePadButtonListeners.Add(Monk);
+            InputController1.InputGamePadButtonListeners.Add(Wizard);
+            ColissionHandler = new ColissionHandler(Sprites);
+            foreach (var curser in ListofCursers)
             {
-                _inputController1.InputGamePadDigitalDpadListeners.Add(curser);
-                _inputController1.InputGamePadButtonListeners.Add(curser);
-                _colissionHandler.CollisionListenersList.Add(curser);
-                _sprites.Add(curser);   
+                InputController1.InputGamePadDigitalDpadListeners.Add(curser);
+                InputController1.InputGamePadButtonListeners.Add(curser);
+                ColissionHandler.CollisionListenersList.Add(curser);
+                Sprites.Add(curser);   
             }
 
 
@@ -128,12 +132,12 @@ namespace GemFight
             // TODO: Add your update logic here
             foreach (var gem in ListOfGems)
             {
-                foreach (var curser in listofCursers)
+                foreach (var curser in ListofCursers)
                 {
                     curser.CollideWith(gem);   
                 }
             }
-            _inputController1.Update(gameTime);
+            InputController1.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -143,20 +147,21 @@ namespace GemFight
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkGray);
 
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
-            foreach (var curser in listofCursers)
+            foreach (var gem in ListOfGems)
+            {
+                gem.Draw(gameTime, _spriteBatch);
+            }
+            foreach (var curser in ListofCursers)
             {
                 curser.Draw(gameTime,_spriteBatch);
             }
-            foreach (var gem in ListOfGems)
-            {
-                gem.Draw(gameTime,_spriteBatch);
-            }
-            monk.Draw(gameTime,_spriteBatch);
+            Monk.Draw(gameTime, _spriteBatch);
+            Wizard.Draw(gameTime,_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
