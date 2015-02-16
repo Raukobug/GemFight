@@ -44,7 +44,7 @@ namespace GemFight
             {
                 ;
                 _squares.Add(new Vector2(StartPointx + (XDistance * xline), StartPointy + (YDistance * yline)));
-                Pos.Add(new Vector2(StartPointx - 1 + (XDistance * xline), StartPointy - 1 + (YDistance * yline)));
+                Pos.Add(new Vector2(StartPointx - 2 + (XDistance * xline), StartPointy - 2 + (YDistance * yline)));
                 if (yline == 6)
                 {
                     yline = 1;
@@ -64,30 +64,7 @@ namespace GemFight
             var rnd = new Random();
             foreach (var vector2 in _squares)
             {
-                switch (rnd.Next(0, 6))
-                {
-                    case 0:
-                        Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("blackGem.png"), vector2));
-                        break;
-                    case 1:
-                        Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("grayGem.png"), vector2));
-                        break;
-                    case 2:
-                        Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("blueGem.png"), vector2));
-                        break;
-                    case 3:
-                        Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("greenGem.png"), vector2));
-                        break;
-                    case 4:
-                        Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("redGem.png"), vector2));
-                        break;
-                    case 5:
-                        Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("yellowGem.png"), vector2));
-                        break;
-                    case 6:
-                        Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("yellowGem.png"), vector2));
-                        break;
-                }
+                Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("Gems.png"), vector2, rnd.Next(0,6)));
             }
         }
     }

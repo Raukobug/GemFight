@@ -23,12 +23,12 @@ namespace GemFight
         public void CursorSetup1()
         {
             if (_game.Player1Turn) { 
-            _game.Cursor1.Position(_theBoard.Pos[0]);
-            _game.Cursor2.Position(_theBoard.Pos[7]);
-            _game.Cursor3.Position(_theBoard.Pos[12]);
-            _game.Cursor4.Position(_theBoard.Pos[14]);
-            _game.Cursor5.Position(_theBoard.Pos[19]);
-            _game.Cursor6.Position(_theBoard.Pos[26]);
+            _game.Cursor1.SetPosition(_theBoard.Pos[0]);
+            _game.Cursor2.SetPosition(_theBoard.Pos[7]);
+            _game.Cursor3.SetPosition(_theBoard.Pos[12]);
+            _game.Cursor4.SetPosition(_theBoard.Pos[14]);
+            _game.Cursor5.SetPosition(_theBoard.Pos[19]);
+            _game.Cursor6.SetPosition(_theBoard.Pos[26]);
             _selectCursorSetup = 1;
             }
         }
@@ -36,12 +36,12 @@ namespace GemFight
         {
             if (_game.Player1Turn)
             {
-                _game.Cursor1.Position(_theBoard.Pos[0]);
-                _game.Cursor2.Position(_theBoard.Pos[6]);
-                _game.Cursor3.Position(_theBoard.Pos[12]);
-                _game.Cursor4.Position(_theBoard.Pos[18]);
-                _game.Cursor5.Position(_theBoard.Pos[24]);
-                _game.Cursor6.Position(_theBoard.Pos[30]);
+                _game.Cursor1.SetPosition(_theBoard.Pos[0]);
+                _game.Cursor2.SetPosition(_theBoard.Pos[6]);
+                _game.Cursor3.SetPosition(_theBoard.Pos[12]);
+                _game.Cursor4.SetPosition(_theBoard.Pos[18]);
+                _game.Cursor5.SetPosition(_theBoard.Pos[24]);
+                _game.Cursor6.SetPosition(_theBoard.Pos[30]);
                 _selectCursorSetup = 2;
             }
         }
@@ -49,12 +49,12 @@ namespace GemFight
         {
             if (_game.Player1Turn)
             {
-                _game.Cursor1.Position(_theBoard.Pos[0]);
-                _game.Cursor2.Position(_theBoard.Pos[1]);
-                _game.Cursor3.Position(_theBoard.Pos[2]);
-                _game.Cursor4.Position(_theBoard.Pos[6]);
-                _game.Cursor5.Position(_theBoard.Pos[7]);
-                _game.Cursor6.Position(_theBoard.Pos[8]);
+                _game.Cursor1.SetPosition(_theBoard.Pos[0]);
+                _game.Cursor2.SetPosition(_theBoard.Pos[1]);
+                _game.Cursor3.SetPosition(_theBoard.Pos[2]);
+                _game.Cursor4.SetPosition(_theBoard.Pos[6]);
+                _game.Cursor5.SetPosition(_theBoard.Pos[7]);
+                _game.Cursor6.SetPosition(_theBoard.Pos[8]);
                 _selectCursorSetup = 3;
             }
         }

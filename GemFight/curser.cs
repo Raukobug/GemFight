@@ -10,10 +10,27 @@ namespace GemFight
 {
     public class Curser : Sprite, IInputGamePadDigitalDpad, IInputGamePadButtons, ICollidable
     {
+        private Animation _animation;
         private Sprite _selectedSprite = null;
         private readonly Board _theBoard = Board.GetInstance();
         public Curser(Texture2D spriteTexture, Vector2 position) : base(spriteTexture, position)
         {
+            SourceRectangle = new Rectangle(0, 0, 95, 92);
+            _animation = new Animation(this);
+            _animation.Frames.Add(new Rectangle(0, 0, 95, 92));
+            _animation.Frames.Add(new Rectangle(95, 0, 95, 92));
+            _animation.Frames.Add(new Rectangle(190, 0, 95, 92));
+            _animation.Frames.Add(new Rectangle(285, 0, 95, 92));
+            _animation.Frames.Add(new Rectangle(190, 0, 95, 92));
+            _animation.Frames.Add(new Rectangle(95, 0, 95, 92));
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (_animation != null)
+            {
+                _animation.Update(gameTime);
+            }
         }
 
         public void ButtonDpadDownPressed(InputController.ButtonStates buttonStates)
@@ -73,11 +90,16 @@ namespace GemFight
             Game1 game = Game1.GetInstance();
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                game.ListOfGems.Remove((Gem)_selectedSprite);
-                if (game.ListOfGems.Count <= 12)
+                //game.ListOfGems.Remove((Gem)_selectedSprite);
+                Gem gem = (Gem)_selectedSprite;
+                if (gem != null)
                 {
-                    _theBoard.GenerateGems();
+                    gem.Destroy();                   
                 }
+                //if (game.ListOfGems.Count <= 12)
+                //{
+                //    _theBoard.GenerateGems();
+                //}
             }
         }
 
@@ -131,10 +153,29 @@ namespace GemFight
             }
         }
 
-        internal void Position(Vector2 vector2)
+        public void SetPosition(Vector2 vector2)
         {
             PositionX = vector2.X;
             PositionY = vector2.Y;
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            // Do we have a texture? If not then there is nothing to draw...
+            if (SpriteTexture != null)
+            {
+                // Has a source rectangle been set?
+                if (SourceRectangle.IsEmpty)
+                {
+                    // No, so draw the entire sprite texture
+                    spriteBatch.Draw(SpriteTexture, Position, null, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0f);
+                }
+                else
+                {
+                    // Yes, so just draw the specified SourceRect
+                    spriteBatch.Draw(SpriteTexture, Position, SourceRectangle, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0f);
+                }
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ namespace GemFight
         public ColissionHandler ColissionHandler;
         public List<Sprite> Sprites = new List<Sprite>();
         public List<Curser> ListofCursers = new List<Curser>();
+        public List<Gem> GemsRemoveAble = new List<Gem>(); 
         public Board TheBoard;
         public Monk Monk;
         public Wizard Wizard;
@@ -82,12 +83,12 @@ namespace GemFight
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Monk = new Monk(Content.Load<Texture2D>("monk.png"),new Vector2(0,50));
             Wizard = new Wizard(Content.Load<Texture2D>("wizard.png"), new Vector2(Graphics.PreferredBackBufferWidth-475,14));
-            Cursor1 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[0]);
-            Cursor2 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[7]);
-            Cursor3 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[12]);
-            Cursor4 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[14]);
-            Cursor5 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[19]);
-            Cursor6 = new Curser(Content.Load<Texture2D>("Marker.png"), TheBoard.Pos[26]);
+            Cursor1 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[0]);
+            Cursor2 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[7]);
+            Cursor3 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[12]);
+            Cursor4 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[14]);
+            Cursor5 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[19]);
+            Cursor6 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[26]);
             ListofCursers.Add(Cursor1);
             ListofCursers.Add(Cursor2);
             ListofCursers.Add(Cursor3);
@@ -102,7 +103,7 @@ namespace GemFight
                 InputController1.InputGamePadDigitalDpadListeners.Add(curser);
                 InputController1.InputGamePadButtonListeners.Add(curser);
                 ColissionHandler.CollisionListenersList.Add(curser);
-                Sprites.Add(curser);   
+                Sprites.Add(curser);
             }
 
 
@@ -136,8 +137,29 @@ namespace GemFight
                 {
                     curser.CollideWith(gem);   
                 }
+                gem.Update(gameTime);
             }
             InputController1.Update(gameTime);
+            foreach (var curser in ListofCursers)
+            {
+                curser.Update(gameTime);
+            }
+            foreach (var gem in GemsRemoveAble)
+            {
+                // TODO : Take a look on LastFrame. Might not be needed.
+                if (gem.LastFrame())
+                {
+                    ListOfGems.Remove(gem);
+                }
+            }
+            if (GemsRemoveAble.Count != 0)
+            {
+                GemsRemoveAble.Clear();
+            }
+            if (ListOfGems.Count <= 12)
+            {
+                TheBoard.GenerateGems();
+            }
             base.Update(gameTime);
         }
 
@@ -147,7 +169,7 @@ namespace GemFight
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DarkGray);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
 
