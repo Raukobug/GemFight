@@ -84,8 +84,8 @@ namespace GemFight
             TheBoard = Board.GetInstance();
             Handler = GameHandler.GetInstance();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player1 = new Monk(Content.Load<Texture2D>("monk.png"),new Vector2(0,50), true);
-            Player2 = new Wizard(Content.Load<Texture2D>("wizard.png"), new Vector2(Graphics.PreferredBackBufferWidth-475,14), false);
+            Player1 = new Monk(Content.Load<Texture2D>("Monk.png"),new Vector2(TheBoard.StartPointx-65,TheBoard.StartPointy-200), true);
+            Player2 = new Wizard(Content.Load<Texture2D>("WizardAnimate.png"), new Vector2(TheBoard.StartPointx-65, TheBoard.StartPointy - 200), false);
             Cursor1 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[0]);
             Cursor2 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[7]);
             Cursor3 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[12]);
@@ -151,6 +151,7 @@ namespace GemFight
                 curser.Update(gameTime);
             }
             Handler.UpdateGems();
+            Player2.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -181,13 +182,13 @@ namespace GemFight
             _spriteBatch.DrawString(_font, Player1.RedGems.ToString(), new Vector2(100, 400), Color.Red);
             _spriteBatch.DrawString(_font, Player1.YellowGems.ToString(), new Vector2(100, 500), Color.Yellow);
             _spriteBatch.DrawString(_font, Player1.Armor.ToString(), new Vector2(100, 600), Color.Gray);
-            _spriteBatch.DrawString(_font, Player2.Health.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 100), Color.DarkRed);
-            _spriteBatch.DrawString(_font, Player2.BlueGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 200), Color.Blue);
-            _spriteBatch.DrawString(_font, Player2.GreenGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 300), Color.Green);
-            _spriteBatch.DrawString(_font, Player2.RedGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 400), Color.Red);
-            _spriteBatch.DrawString(_font, Player2.YellowGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 500), Color.Yellow);
-            _spriteBatch.DrawString(_font, Player2.Armor.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 600), Color.Gray);
-            _spriteBatch.DrawString(_font, ListOfGems.Count.ToString(), new Vector2((Graphics.PreferredBackBufferWidth / 2), 200), Color.Black);
+            _spriteBatch.DrawString(_font, Player2.Health.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 100), Color.DarkRed);
+            _spriteBatch.DrawString(_font, Player2.BlueGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 200), Color.Blue);
+            _spriteBatch.DrawString(_font, Player2.GreenGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 300), Color.Green);
+            _spriteBatch.DrawString(_font, Player2.RedGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 400), Color.Red);
+            _spriteBatch.DrawString(_font, Player2.YellowGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 500), Color.Yellow);
+            _spriteBatch.DrawString(_font, Player2.Armor.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 600), Color.Gray);
+            _spriteBatch.DrawString(_font, ListOfGems.Count.ToString(), new Vector2((TheBoard.StartPointx+350), 400), Color.Black);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
