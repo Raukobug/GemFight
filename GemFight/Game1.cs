@@ -110,7 +110,7 @@ namespace GemFight
                 ColissionHandler.CollisionListenersList.Add(curser);
                 Sprites.Add(curser);
             }
-            _font = Content.Load<SpriteFont>("SegoeUI_72");
+            _font = Content.Load<SpriteFont>("SegoeUI_48");
 
 
             // TODO: use this.Content to load your game content here
@@ -175,8 +175,18 @@ namespace GemFight
             {
                 curser.Draw(gameTime, _spriteBatch);
             }
-            _spriteBatch.DrawString(_font,Player2.Health.ToString(),new Vector2(500,100),Color.Black);
-            _spriteBatch.DrawString(_font, Player1.Health.ToString(), new Vector2(100, 100), Color.Black);
+            _spriteBatch.DrawString(_font, Player1.Health.ToString(), new Vector2(100, 100), Color.DarkRed);
+            _spriteBatch.DrawString(_font, Player1.BlueGems.ToString(), new Vector2(100, 200), Color.Blue);
+            _spriteBatch.DrawString(_font, Player1.GreenGems.ToString(), new Vector2(100, 300), Color.Green);
+            _spriteBatch.DrawString(_font, Player1.RedGems.ToString(), new Vector2(100, 400), Color.Red);
+            _spriteBatch.DrawString(_font, Player1.YellowGems.ToString(), new Vector2(100, 500), Color.Yellow);
+            _spriteBatch.DrawString(_font, Player1.Armor.ToString(), new Vector2(100, 600), Color.Gray);
+            _spriteBatch.DrawString(_font, Player2.Health.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 100), Color.DarkRed);
+            _spriteBatch.DrawString(_font, Player2.BlueGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 200), Color.Blue);
+            _spriteBatch.DrawString(_font, Player2.GreenGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 300), Color.Green);
+            _spriteBatch.DrawString(_font, Player2.RedGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 400), Color.Red);
+            _spriteBatch.DrawString(_font, Player2.YellowGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 500), Color.Yellow);
+            _spriteBatch.DrawString(_font, Player2.Armor.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 600), Color.Gray);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

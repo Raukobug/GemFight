@@ -84,11 +84,11 @@ namespace GemFight
                     case GemColor.Black:
                         if (player == _game.Player1)
                         {
-                            _game.Player2.Health--;
+                            _game.Player2.DoDmg(1);
                         }
                         else
                         {
-                            _game.Player1.Health--;   
+                            _game.Player1.DoDmg(1);   
                         }
                         break;
                 }

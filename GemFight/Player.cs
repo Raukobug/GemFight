@@ -87,5 +87,25 @@ namespace GemFight
         {
 
         }
+
+        public void DoDmg(int dmg)
+        {
+            for (int i = 0; i < dmg; i++)
+            {
+                if (Armor > 0)
+                {
+                    Armor--;
+                }
+                else
+                {
+                    Health--;
+                }
+            }
+        }
+
+        public virtual void Ability()
+        {
+            
+        }
     }
 }
