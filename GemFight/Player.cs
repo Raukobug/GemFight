@@ -28,17 +28,17 @@ namespace GemFight
         {
         }
 
-        public void ButtonBDown(InputController.ButtonStates buttonStates)
+        public virtual void ButtonBDown(InputController.ButtonStates buttonStates)
         {
             //throw new NotImplementedException();
         }
 
-        public void ButtonXDown(InputController.ButtonStates buttonStates)
+        public virtual void ButtonXDown(InputController.ButtonStates buttonStates)
         {
             //throw new NotImplementedException();
         }
 
-        public void ButtonYDown(InputController.ButtonStates buttonStates)
+        public virtual void ButtonYDown(InputController.ButtonStates buttonStates)
         {
             //throw new NotImplementedException();
         }
@@ -88,24 +88,39 @@ namespace GemFight
 
         }
 
-        public void DoDmg(int dmg)
+        public void DoDmg(int dmg, bool Bypass)
         {
             for (int i = 0; i < dmg; i++)
             {
-                if (Armor > 0)
+                if (Bypass)
                 {
-                    Armor--;
+                    Health--;
                 }
                 else
                 {
-                    Health--;
+                    if (Armor > 0)
+                    {
+                        Armor--;
+                    }
+                    else
+                    {
+                        Health--;
+                    }                  
                 }
             }
         }
 
-        public virtual void Ability()
+        public virtual void Ability1()
         {
             
+        }
+        public virtual void Ability2()
+        {
+
+        }
+        public virtual void Ability3()
+        {
+
         }
     }
 }

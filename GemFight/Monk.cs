@@ -16,6 +16,7 @@ namespace GemFight
         private readonly GameHandler _handler = GameHandler.GetInstance();
         private readonly Board _theBoard = Board.GetInstance();
         private int _selectCursorSetup = 1;
+        private int _powerUp = 1;
         public Monk(Texture2D spriteTexture, Vector2 position, bool hasTurn) : base(spriteTexture, position, hasTurn)
         {
             
@@ -70,6 +71,30 @@ namespace GemFight
             } 
         }
 
+        public override void ButtonXDown(InputController.ButtonStates buttonStates)
+        {
+            if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
+            {
+                Ability1();
+            } 
+        }
+
+        public override void ButtonBDown(InputController.ButtonStates buttonStates)
+        {
+            if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
+            {
+                Ability3();
+            } 
+        }
+
+        public override void ButtonYDown(InputController.ButtonStates buttonStates)
+        {
+            if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
+            {
+                Ability2();
+            } 
+        }
+
         public override void ButtonLeftShoulderDown(InputController.ButtonStates buttonStates)
         {
             if (HasTurn)
@@ -111,6 +136,40 @@ namespace GemFight
                             break;
                     }
                 }
+            }
+        }
+
+        public override void Ability1()
+        {
+            if (YellowGems >= 5)
+            {
+                YellowGems = YellowGems - 5;
+                _game.Player2.DoDmg(5*_powerUp, false);
+                _powerUp = 1;
+            }
+        }
+        public override void Ability2()
+        {
+            if (GreenGems >= 20)
+            {
+                GreenGems = GreenGems - 20;
+                _game.Player2.DoDmg(30,false);
+            }
+        }
+        public override void Ability3()
+        {
+            if (GreenGems >= 5 && BlueGems >= 5)
+            {
+                GreenGems = GreenGems - 5;
+                BlueGems = BlueGems - 5;
+                foreach (var gem in _game.ListOfGems)
+                {
+                    if (gem.GemColor == GemColor.Black)
+                    {
+                        gem.ConvertGemColor(GemColor.Yellow);
+                    }
+                }
+                _powerUp++;
             }
         }
     }

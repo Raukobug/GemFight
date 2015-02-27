@@ -16,6 +16,7 @@ namespace GemFight
         private readonly GameHandler _handler = GameHandler.GetInstance();
         private readonly Board _theBoard = Board.GetInstance();
         private int _selectCursorSetup = 1;
+        private bool _extraTurn = false;
         public Wizard(Texture2D spriteTexture, Vector2 position, bool hasTurn)
             : base(spriteTexture, position, hasTurn)
         {
@@ -66,9 +67,39 @@ namespace GemFight
         {
             if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
             {
-                _handler.SwitchPlayer(this);
-                _game.Player1.CursorSetup1();
+                if (_extraTurn)
+                {
+                    _extraTurn = false;
+                }
+                else
+                {
+                    _handler.SwitchPlayer(this);
+                    _game.Player1.CursorSetup1();
+                }
             } 
+        }
+        public override void ButtonXDown(InputController.ButtonStates buttonStates)
+        {
+            if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
+            {
+                Ability1();
+            }
+        }
+
+        public override void ButtonBDown(InputController.ButtonStates buttonStates)
+        {
+            if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
+            {
+                Ability3();
+            }
+        }
+
+        public override void ButtonYDown(InputController.ButtonStates buttonStates)
+        {
+            if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
+            {
+                Ability2();
+            }
         }
 
         public override void ButtonLeftShoulderDown(InputController.ButtonStates buttonStates)
@@ -112,6 +143,34 @@ namespace GemFight
                             break;
                     }
                 }
+            }
+        }
+
+        public override void Ability1()
+        {
+            if (RedGems >= 3 && GreenGems >= 3)
+            {
+                RedGems = RedGems - 3;
+                GreenGems = GreenGems - 3;
+                _game.Player1.DoDmg(6,false);
+            }
+        }
+
+        public override void Ability2()
+        {
+            if (YellowGems >= 20)
+            {
+                YellowGems = YellowGems - 20;
+                _game.Player1.DoDmg(25,true);
+            }
+        }
+
+        public override void Ability3()
+        {
+            if (BlueGems >= 10)
+            {
+                BlueGems = BlueGems - 10;
+                _extraTurn = true;
             }
         }
     }

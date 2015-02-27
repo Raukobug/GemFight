@@ -90,16 +90,11 @@ namespace GemFight
             Game1 game = Game1.GetInstance();
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                //game.ListOfGems.Remove((Gem)_selectedSprite);
                 Gem gem = (Gem)_selectedSprite;
                 if (gem != null)
                 {
                     gem.Destroy();                   
                 }
-                //if (game.ListOfGems.Count <= 12)
-                //{
-                //    _theBoard.GenerateGems();
-                //}
             }
         }
 

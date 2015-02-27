@@ -158,5 +158,36 @@ namespace GemFight
         {
             return _animation.LastFrame;
         }
+
+        public void ConvertGemColor(GemColor color)
+        {
+            switch (color)
+            {
+                case GemColor.Blue:
+                    GemColor = GemColor.Blue;
+                    SourceRectangle = new Rectangle(0, 0, ImageWidth, ImageHeight);
+                    break;
+                case GemColor.Green:
+                    GemColor = GemColor.Green;
+                    SourceRectangle = new Rectangle(0, ImageHeight, ImageWidth, ImageHeight);
+                    break;
+                case GemColor.Red:
+                    GemColor = GemColor.Red;
+                    SourceRectangle = new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight);
+                    break;
+                case GemColor.Yellow:
+                    GemColor = GemColor.Yellow;
+                    SourceRectangle = new Rectangle(0, ImageHeight * 3, ImageWidth, ImageHeight);
+                    break;
+                case GemColor.Gray:
+                    GemColor = GemColor.Gray;
+                    SourceRectangle = new Rectangle(0, ImageHeight * 4, ImageWidth, ImageHeight);
+                    break;
+                case GemColor.Black:
+                    GemColor = GemColor.Black;
+                    SourceRectangle = new Rectangle(0, ImageHeight * 5, ImageWidth, ImageHeight);
+                    break;
+            }
+        }
     }
 }

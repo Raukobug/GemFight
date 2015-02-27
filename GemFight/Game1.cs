@@ -187,6 +187,7 @@ namespace GemFight
             _spriteBatch.DrawString(_font, Player2.RedGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 400), Color.Red);
             _spriteBatch.DrawString(_font, Player2.YellowGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 500), Color.Yellow);
             _spriteBatch.DrawString(_font, Player2.Armor.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 450, 600), Color.Gray);
+            _spriteBatch.DrawString(_font, ListOfGems.Count.ToString(), new Vector2((Graphics.PreferredBackBufferWidth / 2), 200), Color.Black);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
