@@ -33,6 +33,7 @@ namespace GemFight
         public List<Curser> ListofCursers = new List<Curser>();
         public List<Gem> GemsRemoveAble = new List<Gem>(); 
         public Board TheBoard;
+        public GameHandler Handler;
         public Monk Monk;
         public Wizard Wizard;
         public Curser Cursor1;
@@ -80,6 +81,7 @@ namespace GemFight
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             TheBoard = Board.GetInstance();
+            Handler = GameHandler.GetInstance();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Monk = new Monk(Content.Load<Texture2D>("monk.png"),new Vector2(0,50));
             Wizard = new Wizard(Content.Load<Texture2D>("wizard.png"), new Vector2(Graphics.PreferredBackBufferWidth-475,14));
@@ -147,22 +149,7 @@ namespace GemFight
             {
                 curser.Update(gameTime);
             }
-            foreach (var gem in GemsRemoveAble)
-            {
-                // TODO : Take a look on LastFrame. Might not be needed.
-                if (gem.LastFrame())
-                {
-                    ListOfGems.Remove(gem);
-                }
-            }
-            if (GemsRemoveAble.Count != 0)
-            {
-                GemsRemoveAble.Clear();
-            }
-            if (ListOfGems.Count <= 12)
-            {
-                TheBoard.GenerateGems();
-            }
+            Handler.UpdateGems();
             base.Update(gameTime);
         }
 
