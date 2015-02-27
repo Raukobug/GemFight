@@ -22,12 +22,12 @@ namespace GemFight
     /// </summary>
     public class Game1 : Game
     {
-        public bool Player1Turn = true;
         private static Game1 _instance = null;
         public GraphicsDeviceManager Graphics;
         SpriteBatch _spriteBatch;
         public List<Gem> ListOfGems = new List<Gem>();
         public InputController InputController1 = new InputController(PlayerIndex.One);
+        public InputController InputController2 = new InputController(PlayerIndex.Two){Enabled = false};
         public ColissionHandler ColissionHandler;
         public List<Sprite> Sprites = new List<Sprite>();
         public List<Curser> ListofCursers = new List<Curser>();
@@ -96,12 +96,14 @@ namespace GemFight
             ListofCursers.Add(Cursor5);
             ListofCursers.Add(Cursor6);
             InputController1.InputGamePadButtonListeners.Add(Monk);
-            InputController1.InputGamePadButtonListeners.Add(Wizard);
+            InputController2.InputGamePadButtonListeners.Add(Wizard);
             ColissionHandler = new ColissionHandler(Sprites);
             foreach (var curser in ListofCursers)
             {
                 InputController1.InputGamePadDigitalDpadListeners.Add(curser);
                 InputController1.InputGamePadButtonListeners.Add(curser);
+                InputController2.InputGamePadDigitalDpadListeners.Add(curser);
+                InputController2.InputGamePadButtonListeners.Add(curser);
                 ColissionHandler.CollisionListenersList.Add(curser);
                 Sprites.Add(curser);
             }
@@ -128,7 +130,7 @@ namespace GemFight
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || GamePad.GetState(PlayerIndex.Two).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             // TODO: Add your update logic here
             foreach (var gem in ListOfGems)
@@ -140,6 +142,7 @@ namespace GemFight
                 gem.Update(gameTime);
             }
             InputController1.Update(gameTime);
+            InputController2.Update(gameTime);
             foreach (var curser in ListofCursers)
             {
                 curser.Update(gameTime);
@@ -178,12 +181,12 @@ namespace GemFight
             {
                 gem.Draw(gameTime, _spriteBatch);
             }
-            foreach (var curser in ListofCursers)
-            {
-                curser.Draw(gameTime,_spriteBatch);
-            }
             Monk.Draw(gameTime, _spriteBatch);
             Wizard.Draw(gameTime,_spriteBatch);
+            foreach (var curser in ListofCursers)
+            {
+                curser.Draw(gameTime, _spriteBatch);
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }

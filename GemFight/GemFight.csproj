@@ -48,6 +48,7 @@
     <Compile Include="Framework\InputController.cs" />
     <Compile Include="Framework\Sprite.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameHandler.cs" />
     <Compile Include="Gem.cs" />
     <Compile Include="Monk.cs" />
     <Compile Include="Program.cs" />

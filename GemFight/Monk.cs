@@ -13,6 +13,7 @@ namespace GemFight
     {
         public List<Curser> CurserList = new List<Curser>();
         private readonly Game1 _game = Game1.GetInstance();
+        private readonly GameHandler _handler = GameHandler.GetInstance();
         private readonly Board _theBoard = Board.GetInstance();
         private int _selectCursorSetup = 1;
         public Monk(Texture2D spriteTexture, Vector2 position) : base(spriteTexture, position)
@@ -22,7 +23,8 @@ namespace GemFight
 
         public void CursorSetup1()
         {
-            if (_game.Player1Turn) { 
+            if (_handler.PlayerTurn)
+            { 
             _game.Cursor1.SetPosition(_theBoard.Pos[0]);
             _game.Cursor2.SetPosition(_theBoard.Pos[7]);
             _game.Cursor3.SetPosition(_theBoard.Pos[12]);
@@ -34,7 +36,7 @@ namespace GemFight
         }
         public void CursorSetup2()
         {
-            if (_game.Player1Turn)
+            if (_handler.PlayerTurn)
             {
                 _game.Cursor1.SetPosition(_theBoard.Pos[0]);
                 _game.Cursor2.SetPosition(_theBoard.Pos[6]);
@@ -47,7 +49,7 @@ namespace GemFight
         }
         public void CursorSetup3()
         {
-            if (_game.Player1Turn)
+            if (_handler.PlayerTurn)
             {
                 _game.Cursor1.SetPosition(_theBoard.Pos[0]);
                 _game.Cursor2.SetPosition(_theBoard.Pos[1]);
@@ -61,11 +63,11 @@ namespace GemFight
 
         public void ButtonADown(InputController.ButtonStates buttonStates)
         {
-            if (_game.Player1Turn && buttonStates == InputController.ButtonStates.JustPressed)
+            if (_handler.PlayerTurn && buttonStates == InputController.ButtonStates.JustPressed)
             {
-            _game.Player1Turn = false;
-            _game.Wizard.CursorSetup1();
-            }
+                _handler.SwitchPlayer();
+                _game.Wizard.CursorSetup1();
+            } 
         }
 
         public void ButtonBDown(InputController.ButtonStates buttonStates)
@@ -85,7 +87,7 @@ namespace GemFight
 
         public void ButtonLeftShoulderDown(InputController.ButtonStates buttonStates)
         {
-            if (_game.Player1Turn)
+            if (_handler.PlayerTurn)
             {
                 if (buttonStates == InputController.ButtonStates.JustPressed)
                 {
@@ -107,7 +109,7 @@ namespace GemFight
 
         public void ButtonRightShoulderDown(InputController.ButtonStates buttonStates)
         {
-            if (_game.Player1Turn)
+            if (_handler.PlayerTurn)
             {
                 if (buttonStates == InputController.ButtonStates.JustPressed)
                 {

@@ -103,6 +103,11 @@ namespace GemFight
             }
         }
 
+        public void ButtonADown(InputController.ButtonStates buttonStates, InputController controller)
+        {
+            
+        }
+
         public void ButtonBDown(InputController.ButtonStates buttonStates)
         {
         }

@@ -20,8 +20,8 @@ namespace GemFight
     public class Gem : Sprite
     {
         private GemColor _gemColor = GemColor.Red;
-        private int imageWidth = 91;
-        private int imageHeight = 88;
+        private const int ImageWidth = 91;
+        private const int ImageHeight = 88;
         private Animation _animation;
         private Game1 _game = Game1.GetInstance();
         public Gem(Texture2D spriteTexture, Vector2 position, int i)
@@ -31,31 +31,31 @@ namespace GemFight
             {
                 case 0:
                     _gemColor = GemColor.Blue;
-                    SourceRectangle = new Rectangle(0, 0, imageWidth, imageHeight);
+                    SourceRectangle = new Rectangle(0, 0, ImageWidth, ImageHeight);
                     break;
                 case 1:
                     _gemColor = GemColor.Green;
-                    SourceRectangle = new Rectangle(0, imageHeight, imageWidth, imageHeight);
+                    SourceRectangle = new Rectangle(0, ImageHeight, ImageWidth, ImageHeight);
                     break;
                 case 2:
                     _gemColor = GemColor.Red;
-                    SourceRectangle = new Rectangle(0, imageHeight * 2, imageWidth, imageHeight);
+                    SourceRectangle = new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight);
                     break;
                 case 3:
                     _gemColor = GemColor.Yellow;
-                    SourceRectangle = new Rectangle(0, imageHeight * 3, imageWidth, imageHeight);
+                    SourceRectangle = new Rectangle(0, ImageHeight * 3, ImageWidth, ImageHeight);
                     break;
                 case 4:
                     _gemColor = GemColor.Gray;
-                    SourceRectangle = new Rectangle(0, imageHeight * 4, imageWidth, imageHeight);
+                    SourceRectangle = new Rectangle(0, ImageHeight * 4, ImageWidth, ImageHeight);
                     break;
                 case 5:
                     _gemColor = GemColor.Black;
-                    SourceRectangle = new Rectangle(0, imageHeight * 5, imageWidth, imageHeight);
+                    SourceRectangle = new Rectangle(0, ImageHeight * 5, ImageWidth, ImageHeight);
                     break;
                 case 6:
                     _gemColor = GemColor.Black;
-                    SourceRectangle = new Rectangle(0, imageHeight * 6, imageWidth, imageHeight);
+                    SourceRectangle = new Rectangle(0, ImageHeight * 6, ImageWidth, ImageHeight);
                     break;
             }
         }
@@ -68,57 +68,57 @@ namespace GemFight
             {
                 case GemColor.Blue:
                     _animation.Loop = false;
-                    _animation.Frames.Add(new Rectangle(imageWidth, 0, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 2, 0, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 3, 0, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 4, 0, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 5, 0, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 6, 0, imageWidth, imageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth, 0, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 2, 0, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 3, 0, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 4, 0, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 5, 0, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 6, 0, ImageWidth, ImageHeight));
                     break;
                 case GemColor.Green:
                     _animation.Loop = false;
-                    _animation.Frames.Add(new Rectangle(imageWidth, 0, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 2, imageHeight, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 3, imageHeight, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 4, imageHeight, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 5, imageHeight, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 6, imageHeight, imageWidth, imageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth, 0, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight, ImageWidth, ImageHeight));
                     break;
                 case GemColor.Red:
                     _animation.Loop = false;
-                    _animation.Frames.Add(new Rectangle(imageWidth, 0, imageWidth * 2, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 2, imageHeight * 2, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 3, imageHeight * 2, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 4, imageHeight * 2, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 5, imageHeight * 2, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 6, imageHeight * 2, imageWidth, imageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth, 0, ImageWidth * 2, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 2, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 2, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 2, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight * 2, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight * 2, ImageWidth, ImageHeight));
                     break;
                 case GemColor.Yellow:
                     _animation.Loop = false;
-                    _animation.Frames.Add(new Rectangle(imageWidth, 0, imageWidth * 3, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 2, imageHeight * 3, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 3, imageHeight * 3, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 4, imageHeight * 3, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 5, imageHeight * 3, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 6, imageHeight * 3, imageWidth, imageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth, 0, ImageWidth * 3, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 3, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight * 3, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight * 3, ImageWidth, ImageHeight));
                     break;
                 case GemColor.Gray:
                     _animation.Loop = false;
-                    _animation.Frames.Add(new Rectangle(imageWidth, 0, imageWidth * 4, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 2, imageHeight * 4, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 3, imageHeight * 4, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 4, imageHeight * 4, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 5, imageHeight * 4, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 6, imageHeight * 4, imageWidth, imageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth, 0, ImageWidth * 4, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 4, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 4, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 4, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight * 4, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight * 4, ImageWidth, ImageHeight));
                     break;
                 case GemColor.Black:
                     _animation.Loop = false;
-                    _animation.Frames.Add(new Rectangle(imageWidth, 0, imageWidth * 5, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 2, imageHeight * 5, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 3, imageHeight * 5, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 4, imageHeight * 5, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 5, imageHeight * 5, imageWidth, imageHeight));
-                    _animation.Frames.Add(new Rectangle(imageWidth * 6, imageHeight * 5, imageWidth, imageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth, 0, ImageWidth * 5, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 5, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 5, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 5, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight * 5, ImageWidth, ImageHeight));
+                    _animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight * 5, ImageWidth, ImageHeight));
                     break;
             }
         }

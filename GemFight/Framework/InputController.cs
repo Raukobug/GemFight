@@ -11,6 +11,7 @@ namespace GemFight.Framework
         private float _analogStickDeadZone = 0.05f;
         private PlayerIndex _playerIndex;
         private GamePadState _gamePadState;
+        private bool _enabled = true;
 
         // used to remember last state of the buttons
         private bool _buttonADown = false;
@@ -383,16 +384,22 @@ namespace GemFight.Framework
        // implemented by Iupdateable
         public void Update(GameTime gameTime)
         {
-            
+            if (_enabled) { 
             _gamePadState = GamePad.GetState(_playerIndex);
             if (InputGamePadDigitalDpadListeners.Count > 0) CheckDpad();
             if (InputGamePadButtonListeners.Count > 0) CheckButtons();
             if (InputGamePadAnalogTriggerListeners.Count > 0) CheckDigitalTriggers();
             if (InputGamePadLeftStickListeners.Count > 0) CheckLeftStick();
             if (InputGamePadRightStickListeners.Count > 0) CheckRightStick();
+            }
         }
 
-       public bool Enabled { get; private set; }
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         public int UpdateOrder { get; private set; }
         public event EventHandler<EventArgs> EnabledChanged;
         public event EventHandler<EventArgs> UpdateOrderChanged;
