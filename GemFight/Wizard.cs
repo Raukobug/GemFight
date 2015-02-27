@@ -9,22 +9,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
 {
-    public class Wizard : Sprite, IInputGamePadButtons
+    public class Wizard : Player, IInputGamePadButtons
     {
         public List<Curser> CurserList = new List<Curser>();
         private readonly Game1 _game = Game1.GetInstance();
         private readonly GameHandler _handler = GameHandler.GetInstance();
         private readonly Board _theBoard = Board.GetInstance();
         private int _selectCursorSetup = 1;
-        public Wizard(Texture2D spriteTexture, Vector2 position)
-            : base(spriteTexture, position)
+        public Wizard(Texture2D spriteTexture, Vector2 position, bool hasTurn)
+            : base(spriteTexture, position, hasTurn)
         {
 
         }
 
-        public void CursorSetup1()
+        public override void CursorSetup1()
         {
-            if (!_handler.PlayerTurn)
+            if (HasTurn)
             {
             _game.Cursor1.SetPosition(_theBoard.Pos[12]);
             _game.Cursor2.SetPosition(_theBoard.Pos[13]);
@@ -35,9 +35,9 @@ namespace GemFight
             _selectCursorSetup = 1;
             }
         }
-        public void CursorSetup2()
+        public override void CursorSetup2()
         {
-            if (!_handler.PlayerTurn)
+            if (HasTurn)
             {
                 _game.Cursor1.SetPosition(_theBoard.Pos[0]);
                 _game.Cursor2.SetPosition(_theBoard.Pos[6]);
@@ -48,9 +48,9 @@ namespace GemFight
                 _selectCursorSetup = 2;
             }
         }
-        public void CursorSetup3()
+        public override void CursorSetup3()
         {
-            if (!_handler.PlayerTurn)
+            if (HasTurn)
             {
                 _game.Cursor1.SetPosition(_theBoard.Pos[0]);
                 _game.Cursor2.SetPosition(_theBoard.Pos[1]);
@@ -62,33 +62,18 @@ namespace GemFight
             }
         }
 
-        public void ButtonADown(InputController.ButtonStates buttonStates)
+        public override void ButtonADown(InputController.ButtonStates buttonStates)
         {
-            if (!_handler.PlayerTurn && buttonStates == InputController.ButtonStates.JustPressed)
+            if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
             {
-                _handler.SwitchPlayer();
-                _game.Monk.CursorSetup1();
+                _handler.SwitchPlayer(this);
+                _game.Player1.CursorSetup1();
             } 
         }
 
-        public void ButtonBDown(InputController.ButtonStates buttonStates)
+        public override void ButtonLeftShoulderDown(InputController.ButtonStates buttonStates)
         {
-            //throw new NotImplementedException();
-        }
-
-        public void ButtonXDown(InputController.ButtonStates buttonStates)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public void ButtonYDown(InputController.ButtonStates buttonStates)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public void ButtonLeftShoulderDown(InputController.ButtonStates buttonStates)
-        {
-            if (!_handler.PlayerTurn)
+            if (HasTurn)
             {
                 if (buttonStates == InputController.ButtonStates.JustPressed)
                 {
@@ -108,9 +93,9 @@ namespace GemFight
             }
         }
 
-        public void ButtonRightShoulderDown(InputController.ButtonStates buttonStates)
+        public override void ButtonRightShoulderDown(InputController.ButtonStates buttonStates)
         {
-            if (!_handler.PlayerTurn)
+            if (HasTurn)
             {
                 if (buttonStates == InputController.ButtonStates.JustPressed)
                 {
@@ -128,26 +113,6 @@ namespace GemFight
                     }
                 }
             }
-        }
-
-        public void ButtonStartDown(InputController.ButtonStates buttonStates)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public void ButtonBackDown(InputController.ButtonStates buttonStates)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public void ButtonLeftStickDown(InputController.ButtonStates buttonStates)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public void ButtonRightStickDown(InputController.ButtonStates buttonStates)
-        {
-            //throw new NotImplementedException();
         }
     }
 }

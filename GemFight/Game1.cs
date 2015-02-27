@@ -34,14 +34,15 @@ namespace GemFight
         public List<Gem> GemsRemoveAble = new List<Gem>(); 
         public Board TheBoard;
         public GameHandler Handler;
-        public Monk Monk;
-        public Wizard Wizard;
+        public Player Player1;
+        public Player Player2;
         public Curser Cursor1;
         public Curser Cursor2;
         public Curser Cursor3;
         public Curser Cursor4;
         public Curser Cursor5;
         public Curser Cursor6;
+        private SpriteFont _font;
 
         private Game1()
             : base()
@@ -83,8 +84,8 @@ namespace GemFight
             TheBoard = Board.GetInstance();
             Handler = GameHandler.GetInstance();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Monk = new Monk(Content.Load<Texture2D>("monk.png"),new Vector2(0,50));
-            Wizard = new Wizard(Content.Load<Texture2D>("wizard.png"), new Vector2(Graphics.PreferredBackBufferWidth-475,14));
+            Player1 = new Monk(Content.Load<Texture2D>("monk.png"),new Vector2(0,50), true);
+            Player2 = new Wizard(Content.Load<Texture2D>("wizard.png"), new Vector2(Graphics.PreferredBackBufferWidth-475,14), false);
             Cursor1 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[0]);
             Cursor2 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[7]);
             Cursor3 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[12]);
@@ -97,8 +98,8 @@ namespace GemFight
             ListofCursers.Add(Cursor4);
             ListofCursers.Add(Cursor5);
             ListofCursers.Add(Cursor6);
-            InputController1.InputGamePadButtonListeners.Add(Monk);
-            InputController2.InputGamePadButtonListeners.Add(Wizard);
+            InputController1.InputGamePadButtonListeners.Add(Player1);
+            InputController2.InputGamePadButtonListeners.Add(Player2);
             ColissionHandler = new ColissionHandler(Sprites);
             foreach (var curser in ListofCursers)
             {
@@ -109,7 +110,7 @@ namespace GemFight
                 ColissionHandler.CollisionListenersList.Add(curser);
                 Sprites.Add(curser);
             }
-
+            _font = Content.Load<SpriteFont>("SegoeUI_72");
 
 
             // TODO: use this.Content to load your game content here
@@ -168,12 +169,14 @@ namespace GemFight
             {
                 gem.Draw(gameTime, _spriteBatch);
             }
-            Monk.Draw(gameTime, _spriteBatch);
-            Wizard.Draw(gameTime,_spriteBatch);
+            Player1.Draw(gameTime, _spriteBatch);
+            Player2.Draw(gameTime,_spriteBatch);
             foreach (var curser in ListofCursers)
             {
                 curser.Draw(gameTime, _spriteBatch);
             }
+            _spriteBatch.DrawString(_font,Player2.Health.ToString(),new Vector2(500,100),Color.Black);
+            _spriteBatch.DrawString(_font, Player1.Health.ToString(), new Vector2(100, 100), Color.Black);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

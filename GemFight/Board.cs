@@ -20,9 +20,9 @@ namespace GemFight
         public const int YDistance = 94;
         public const int XDistance = 97;
         public int StartPointx = (Game.Graphics.PreferredBackBufferWidth / 2) - (XDistance * 4);
-        public int StartPointy = (Game.Graphics.PreferredBackBufferHeight / 2) - (YDistance * 4);
+        public int StartPointy = (Game.Graphics.PreferredBackBufferHeight) - (YDistance * 7);
         public int EndPointx = (Game.Graphics.PreferredBackBufferWidth / 2) + (XDistance * 2);
-        public int EndPointy = (Game.Graphics.PreferredBackBufferHeight / 2) + (YDistance * 2);
+        public int EndPointy = (Game.Graphics.PreferredBackBufferHeight) - (YDistance + 1);
 
         private Board()
         {

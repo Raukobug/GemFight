@@ -8,13 +8,13 @@ namespace GemFight
 {
     public class GameHandler
     {
-        private bool _playerTurn = true;
+        //private bool _playerTurn = true;
         private Game1 _game = Game1.GetInstance();
 
-        public bool PlayerTurn
-        {
-            get { return _playerTurn; }
-        }
+        //public bool PlayerTurn
+        //{
+        //    get { return _playerTurn; }
+        //}
 
         private static GameHandler _instance = null;
         private GameHandler()
@@ -26,19 +26,21 @@ namespace GemFight
             return _instance ?? (_instance = new GameHandler());
         }
 
-        public void SwitchPlayer()
+        public void SwitchPlayer(Player player)
         {
-            if (_playerTurn)
+            if (player is Monk)
             {
-                _playerTurn = false;
+                _game.Player2.HasTurn = true;
+                player.HasTurn = false;
                 _game.InputController1.Enabled = false;
-                _game.InputController2.Enabled = true;
+                _game.InputController2.Enabled = true; 
             }
             else
             {
-                _playerTurn = true;
+                _game.Player1.HasTurn = true;
+                player.HasTurn = false;
                 _game.InputController1.Enabled = true;
-                _game.InputController2.Enabled = false;
+                _game.InputController2.Enabled = false; 
             }
         }
 
@@ -46,6 +48,7 @@ namespace GemFight
         {
             foreach (var gem in _game.GemsRemoveAble)
             {
+                AssignGem(gem);
                 _game.ListOfGems.Remove(gem);
             }
             if (_game.GemsRemoveAble.Count != 0)
@@ -60,15 +63,35 @@ namespace GemFight
 
         public void AssignGem(Gem gem)
         {
-            if (PlayerTurn)
-            {
-                switch (gem.GemColor)
+            Player player = _game.Player1.HasTurn ? _game.Player2 : _game.Player1;
+            switch (gem.GemColor)
                 {
-                        case GemColor.Blue:
-                        Console.WriteLine("test");
+                    case GemColor.Blue:
+                        player.BlueGems++;
+                        break;
+                    case GemColor.Green:
+                        player.GreenGems++;
+                        break;
+                    case GemColor.Red:
+                        player.RedGems++;
+                        break;
+                    case GemColor.Yellow:
+                        player.YellowGems++;
+                        break;
+                    case GemColor.Gray:
+                        player.Armor++;
+                        break;
+                    case GemColor.Black:
+                        if (player == _game.Player1)
+                        {
+                            _game.Player2.Health--;
+                        }
+                        else
+                        {
+                            _game.Player1.Health--;   
+                        }
                         break;
                 }
-            }
         }
     }
 }
