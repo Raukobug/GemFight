@@ -85,7 +85,7 @@ namespace GemFight
             Handler = GameHandler.GetInstance();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Player1 = new Monk(Content.Load<Texture2D>("Monk.png"),new Vector2(TheBoard.StartPointx-65,TheBoard.StartPointy-200), true);
-            Player2 = new Wizard(Content.Load<Texture2D>("WizardAnimate.png"), new Vector2(TheBoard.StartPointx-65, TheBoard.StartPointy - 200), false);
+            Player2 = new Wizard(Content.Load<Texture2D>("WizardAnimate.png"), new Vector2(TheBoard.StartPointx+600, TheBoard.StartPointy - 200), false);
             Player1.Enemy = Player2;
             Player2.Enemy = Player1;
             Cursor1 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[0]);

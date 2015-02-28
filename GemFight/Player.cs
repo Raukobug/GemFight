@@ -7,13 +7,18 @@ namespace GemFight
 {
     public class Player : Sprite, IInputGamePadButtons
     {
+        protected enum State
+        {
+            Wait,
+            Other
+        }
         protected GameHandler Handler = GameHandler.GetInstance();
         protected Game1 Game = Game1.GetInstance();
         protected readonly Board TheBoard = Board.GetInstance();
         protected int SelectCursorSetup = 1;
         public List<Curser> CurserList = new List<Curser>();
         protected Animation Animation;
-        protected const int ImageWidth = 900;
+        protected const int ImageWidth = 250;
         protected const int ImageHeight = 300;
         public int Health = 100;
         public int Armor = 0;

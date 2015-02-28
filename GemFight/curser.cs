@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GemFight.Framework;
+﻿using GemFight.Framework;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,8 +7,7 @@ namespace GemFight
     public class Curser : Sprite, IInputGamePadDigitalDpad, IInputGamePadButtons, ICollidable
     {
         private Animation _animation;
-        private Sprite _selectedSprite = null;
-        private readonly Board _theBoard = Board.GetInstance();
+        private Sprite _selectedSprite;
         private GameHandler _handler = GameHandler.GetInstance();
         public Curser(Texture2D spriteTexture, Vector2 position) : base(spriteTexture, position)
         {
@@ -84,7 +79,6 @@ namespace GemFight
 
         public void ButtonADown(InputController.ButtonStates buttonStates)
         {
-            Game1 game = Game1.GetInstance();
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
                 Gem gem = (Gem)_selectedSprite;

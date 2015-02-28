@@ -112,41 +112,13 @@ namespace GemFight
 
         public void UpdateMoveAble()
         {
-            if (_game.ListofCursers.Any(c => c.PositionY < _board.StartPointy+93))
-            {
-                _ableToMoveUp = false;
-            }
-            else
-            {
-                _ableToMoveUp = true;
-            }
+            _ableToMoveUp = !_game.ListofCursers.Any(c => c.PositionY < _board.StartPointy+93);
 
-            if (_game.ListofCursers.Any(c => c.PositionY > _board.EndPointy - 93))
-            {
-                _ableToMoveDown = false;
-            }
-            else
-            {
-                _ableToMoveDown = true;
-            }
+            _ableToMoveDown = !_game.ListofCursers.Any(c => c.PositionY > _board.EndPointy - 93);
 
-            if (_game.ListofCursers.Any(c => c.PositionX < _board.StartPointx + 97))
-            {
-                _ableToMoveLeft = false;
-            }
-            else
-            {
-                _ableToMoveLeft = true;
-            }
+            _ableToMoveLeft = !_game.ListofCursers.Any(c => c.PositionX < _board.StartPointx + 97);
 
-            if (_game.ListofCursers.Any(c => c.PositionX > _board.EndPointx - 97))
-            {
-                _ableToMoveRight = false;
-            }
-            else
-            {
-                _ableToMoveRight = true;
-            }
+            _ableToMoveRight = !_game.ListofCursers.Any(c => c.PositionX > _board.EndPointx - 97);
         }
     }
 }

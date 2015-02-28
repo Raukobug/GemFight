@@ -8,10 +8,13 @@ namespace GemFight
     {
 
         private bool _extraTurn;
+        private State _state;
 
         public Wizard(Texture2D spriteTexture, Vector2 position, bool hasTurn)
             : base(spriteTexture, position, hasTurn)
         {
+            WaitAnimation();
+            _state = State.Wait;
         }
 
         public override void CursorSetup1()
@@ -139,62 +142,13 @@ namespace GemFight
 
         public override void Ability1()
         {
-            Animation = new Animation(this) { Delay = 20, Loop = false };
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
+            Animation = new Animation(this) { Delay = 100, Loop = false };
+            Animation.Frames.Add(new Rectangle(0, ImageHeight, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 7, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 7, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 8, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 8, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 9, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 9, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 7, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 7, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 8, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 8, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 9, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 9, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 5, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 6, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 7, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 7, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 8, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 8, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 9, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 9, ImageHeight * 3, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
+            _state = State.Other;
             if (RedGems >= 3 && GreenGems >= 3)
             {
                 RedGems = RedGems - 3;
@@ -206,6 +160,17 @@ namespace GemFight
 
         public override void Ability2()
         {
+            Animation = new Animation(this) { Delay = 80, Loop = false };
+            Animation.Frames.Add(new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 3, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
+            _state = State.Other;
             if (YellowGems >= 20)
             {
                 YellowGems = YellowGems - 20;
@@ -215,6 +180,17 @@ namespace GemFight
 
         public override void Ability3()
         {
+            Animation = new Animation(this) { Delay = 80, Loop = false };
+            Animation.Frames.Add(new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 2, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
+            _state = State.Other;
             if (BlueGems >= 10)
             {
                 BlueGems = BlueGems - 10;
@@ -227,6 +203,11 @@ namespace GemFight
             if (Animation != null)
             {
                 Animation.Update(gameTime);
+                if (Animation.LastFrame && _state != State.Wait)
+                {
+                    WaitAnimation();
+                    _state = State.Wait;
+                }
             }
         }
 
@@ -247,6 +228,14 @@ namespace GemFight
                     spriteBatch.Draw(SpriteTexture, Position, SourceRectangle, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0f);
                 }
             }
+        }
+
+        private void WaitAnimation()
+        {
+            Animation = new Animation(this) { Delay = 120, Loop = true };
+            Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth, 0, ImageWidth, ImageHeight));
+            Animation.Frames.Add(new Rectangle(ImageWidth * 2, 0, ImageWidth, ImageHeight));
         }
     }
 }
