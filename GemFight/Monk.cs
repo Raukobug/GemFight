@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.UI.WebControls;
-using GemFight.Framework;
+﻿using GemFight.Framework;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
 {
-    public class Monk : Player, IInputGamePadButtons
+    public class Monk : Player
     {
-        public List<Curser> CurserList = new List<Curser>();
-        private readonly Game1 _game = Game1.GetInstance();
-        private readonly GameHandler _handler = GameHandler.GetInstance();
-        private readonly Board _theBoard = Board.GetInstance();
-        private int _selectCursorSetup = 1;
         private int _powerUp = 1;
         public Monk(Texture2D spriteTexture, Vector2 position, bool hasTurn) : base(spriteTexture, position, hasTurn)
         {
@@ -26,39 +16,39 @@ namespace GemFight
         {
             if (HasTurn)
             { 
-            _game.Cursor1.SetPosition(_theBoard.Pos[0]);
-            _game.Cursor2.SetPosition(_theBoard.Pos[7]);
-            _game.Cursor3.SetPosition(_theBoard.Pos[12]);
-            _game.Cursor4.SetPosition(_theBoard.Pos[14]);
-            _game.Cursor5.SetPosition(_theBoard.Pos[19]);
-            _game.Cursor6.SetPosition(_theBoard.Pos[26]);
-            _selectCursorSetup = 1;
+            Game.Cursor1.SetPosition(TheBoard.Pos[0]);
+            Game.Cursor2.SetPosition(TheBoard.Pos[7]);
+            Game.Cursor3.SetPosition(TheBoard.Pos[12]);
+            Game.Cursor4.SetPosition(TheBoard.Pos[14]);
+            Game.Cursor5.SetPosition(TheBoard.Pos[19]);
+            Game.Cursor6.SetPosition(TheBoard.Pos[26]);
+            SelectCursorSetup = 1;
             }
         }
         public override void CursorSetup2()
         {
             if (HasTurn)
             {
-                _game.Cursor1.SetPosition(_theBoard.Pos[0]);
-                _game.Cursor2.SetPosition(_theBoard.Pos[6]);
-                _game.Cursor3.SetPosition(_theBoard.Pos[12]);
-                _game.Cursor4.SetPosition(_theBoard.Pos[18]);
-                _game.Cursor5.SetPosition(_theBoard.Pos[24]);
-                _game.Cursor6.SetPosition(_theBoard.Pos[30]);
-                _selectCursorSetup = 2;
+                Game.Cursor1.SetPosition(TheBoard.Pos[0]);
+                Game.Cursor2.SetPosition(TheBoard.Pos[6]);
+                Game.Cursor3.SetPosition(TheBoard.Pos[12]);
+                Game.Cursor4.SetPosition(TheBoard.Pos[18]);
+                Game.Cursor5.SetPosition(TheBoard.Pos[24]);
+                Game.Cursor6.SetPosition(TheBoard.Pos[30]);
+                SelectCursorSetup = 2;
             }
         }
         public override void CursorSetup3()
         {
             if (HasTurn)
             {
-                _game.Cursor1.SetPosition(_theBoard.Pos[0]);
-                _game.Cursor2.SetPosition(_theBoard.Pos[1]);
-                _game.Cursor3.SetPosition(_theBoard.Pos[2]);
-                _game.Cursor4.SetPosition(_theBoard.Pos[6]);
-                _game.Cursor5.SetPosition(_theBoard.Pos[7]);
-                _game.Cursor6.SetPosition(_theBoard.Pos[8]);
-                _selectCursorSetup = 3;
+                Game.Cursor1.SetPosition(TheBoard.Pos[0]);
+                Game.Cursor2.SetPosition(TheBoard.Pos[1]);
+                Game.Cursor3.SetPosition(TheBoard.Pos[2]);
+                Game.Cursor4.SetPosition(TheBoard.Pos[6]);
+                Game.Cursor5.SetPosition(TheBoard.Pos[7]);
+                Game.Cursor6.SetPosition(TheBoard.Pos[8]);
+                SelectCursorSetup = 3;
             }
         }
 
@@ -66,8 +56,8 @@ namespace GemFight
         {
             if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
             {
-                _handler.SwitchPlayer(this);
-                _game.Player2.CursorSetup1();
+                Handler.SwitchPlayer(this);
+                Enemy.CursorSetup1();
             } 
         }
 
@@ -101,7 +91,7 @@ namespace GemFight
             {
                 if (buttonStates == InputController.ButtonStates.JustPressed)
                 {
-                    switch (_selectCursorSetup)
+                    switch (SelectCursorSetup)
                     {
                         case 1:
                             CursorSetup3();
@@ -123,7 +113,7 @@ namespace GemFight
             {
                 if (buttonStates == InputController.ButtonStates.JustPressed)
                 {
-                    switch (_selectCursorSetup)
+                    switch (SelectCursorSetup)
                     {
                         case 1:
                             CursorSetup2();
@@ -144,7 +134,7 @@ namespace GemFight
             if (YellowGems >= 5)
             {
                 YellowGems = YellowGems - 5;
-                _game.Player2.DoDmg(5*_powerUp, false);
+                Enemy.DoDmg(5 * _powerUp, false);
                 _powerUp = 1;
             }
         }
@@ -153,7 +143,7 @@ namespace GemFight
             if (GreenGems >= 20)
             {
                 GreenGems = GreenGems - 20;
-                _game.Player2.DoDmg(30,false);
+                Enemy.DoDmg(30, false);
             }
         }
         public override void Ability3()
@@ -162,7 +152,7 @@ namespace GemFight
             {
                 GreenGems = GreenGems - 5;
                 BlueGems = BlueGems - 5;
-                foreach (var gem in _game.ListOfGems)
+                foreach (var gem in Game.ListOfGems)
                 {
                     if (gem.GemColor == GemColor.Black)
                     {

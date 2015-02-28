@@ -86,6 +86,8 @@ namespace GemFight
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Player1 = new Monk(Content.Load<Texture2D>("Monk.png"),new Vector2(TheBoard.StartPointx-65,TheBoard.StartPointy-200), true);
             Player2 = new Wizard(Content.Load<Texture2D>("WizardAnimate.png"), new Vector2(TheBoard.StartPointx-65, TheBoard.StartPointy - 200), false);
+            Player1.Enemy = Player2;
+            Player2.Enemy = Player1;
             Cursor1 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[0]);
             Cursor2 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[7]);
             Cursor3 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[12]);
@@ -151,6 +153,7 @@ namespace GemFight
                 curser.Update(gameTime);
             }
             Handler.UpdateGems();
+            Handler.UpdateMoveAble();
             Player2.Update(gameTime);
             base.Update(gameTime);
         }

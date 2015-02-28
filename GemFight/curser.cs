@@ -13,6 +13,7 @@ namespace GemFight
         private Animation _animation;
         private Sprite _selectedSprite = null;
         private readonly Board _theBoard = Board.GetInstance();
+        private GameHandler _handler = GameHandler.GetInstance();
         public Curser(Texture2D spriteTexture, Vector2 position) : base(spriteTexture, position)
         {
             SourceRectangle = new Rectangle(0, 0, 95, 92);
@@ -37,10 +38,9 @@ namespace GemFight
         {
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                PositionY = PositionY + 94;
-                if (PositionY > _theBoard.EndPointy)
+                if (_handler.AbleToMoveDown)
                 {
-                    PositionY = _theBoard.EndPointy-1;
+                    PositionY = PositionY + 94;                   
                 }
             }
             _selectedSprite = null;
@@ -50,10 +50,9 @@ namespace GemFight
         {
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                PositionY = PositionY - 94;
-                if (PositionY < _theBoard.StartPointy + 93)
+                if (_handler.AbleToMoveUp)
                 {
-                    PositionY = _theBoard.StartPointy + 93;
+                    PositionY = PositionY - 94;                   
                 }
             }
             _selectedSprite = null;
@@ -63,10 +62,9 @@ namespace GemFight
         {
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                PositionX = PositionX - 97;
-                if (PositionX < _theBoard.StartPointx + 95)
+                if (_handler.AbleToMoveLeft)
                 {
-                    PositionX = _theBoard.StartPointx + 95;
+                    PositionX = PositionX - 97;
                 }
             }
             _selectedSprite = null;
@@ -76,10 +74,9 @@ namespace GemFight
         {
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                PositionX = PositionX + 97;
-                if (PositionX > _theBoard.EndPointx)
+                if (_handler.AbleToMoveRight)
                 {
-                    PositionX = _theBoard.EndPointx-1;
+                    PositionX = PositionX + 97;
                 }
             }
             _selectedSprite = null;
