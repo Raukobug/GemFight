@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace GemFight
 {
-    class Animation : IUpdateable
+    public class Animation : IUpdateable
     {
         private double _milisecondsSinceLastFrameUpdate = 0;
         private Sprite _sprite;

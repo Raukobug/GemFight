@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using GemFight.Framework;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,8 +7,14 @@ namespace GemFight
 {
     public class Player : Sprite, IInputGamePadButtons
     {
-        private GameHandler _handler = GameHandler.GetInstance();
-        private Game1 _game = Game1.GetInstance();
+        protected GameHandler Handler = GameHandler.GetInstance();
+        protected Game1 Game = Game1.GetInstance();
+        protected readonly Board TheBoard = Board.GetInstance();
+        protected int SelectCursorSetup = 1;
+        public List<Curser> CurserList = new List<Curser>();
+        protected Animation Animation;
+        protected const int ImageWidth = 900;
+        protected const int ImageHeight = 300;
         public int Health = 100;
         public int Armor = 0;
         public int BlueGems = 0;
@@ -19,9 +22,11 @@ namespace GemFight
         public int RedGems = 0;
         public int YellowGems = 0;
         public bool HasTurn;
+        public Player Enemy;
         public Player(Texture2D spriteTexture, Vector2 position, bool hasTurn) : base(spriteTexture, position)
         {
             HasTurn = hasTurn;
+            SourceRectangle = new Rectangle(0, 0, ImageWidth, ImageHeight);
         }
 
         public virtual void ButtonADown(InputController.ButtonStates buttonStates)
