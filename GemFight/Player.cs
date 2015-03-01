@@ -5,12 +5,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
 {
-    public class Player : Sprite, IInputGamePadButtons
+    public class Player : Sprite, IInputGamePadButtons, ICollidable
     {
         protected enum State
         {
             Wait,
-            Other
+            Ability1,
+            Ability2,
+            Ability3
         }
         protected GameHandler Handler = GameHandler.GetInstance();
         protected Game1 Game = Game1.GetInstance();
@@ -129,6 +131,11 @@ namespace GemFight
 
         }
         public virtual void Ability3()
+        {
+
+        }
+
+        public void CollideWith(Sprite other)
         {
 
         }

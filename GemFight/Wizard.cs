@@ -1,4 +1,5 @@
-﻿using GemFight.Framework;
+﻿using System.Web.UI.WebControls;
+using GemFight.Framework;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,6 +10,8 @@ namespace GemFight
 
         private bool _extraTurn;
         private State _state;
+        private int _spawnSpriteOnFrame;
+        private bool _abilityCrated = false;
 
         public Wizard(Texture2D spriteTexture, Vector2 position, bool hasTurn)
             : base(spriteTexture, position, hasTurn)
@@ -148,7 +151,8 @@ namespace GemFight
             Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
-            _state = State.Other;
+            _state = State.Ability1;
+            _spawnSpriteOnFrame = 3;
             if (RedGems >= 3 && GreenGems >= 3)
             {
                 RedGems = RedGems - 3;
@@ -170,7 +174,8 @@ namespace GemFight
             Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
-            _state = State.Other;
+            _spawnSpriteOnFrame = 5;
+            _state = State.Ability2;
             if (YellowGems >= 20)
             {
                 YellowGems = YellowGems - 20;
@@ -190,7 +195,8 @@ namespace GemFight
             Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 2, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 2, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
-            _state = State.Other;
+            _spawnSpriteOnFrame = 5;
+            _state = State.Ability3;
             if (BlueGems >= 10)
             {
                 BlueGems = BlueGems - 10;
@@ -207,6 +213,28 @@ namespace GemFight
                 {
                     WaitAnimation();
                     _state = State.Wait;
+                    _abilityCrated = false;
+                }
+                else
+                {
+                    if (Animation.CurrentFrame == _spawnSpriteOnFrame && _spawnSpriteOnFrame != 0 && !_abilityCrated)
+                    {
+                        Ability ability;
+                        switch (_state)
+                        {
+                            case State.Ability1:
+                                ability = new Ability(Game.Content.Load<Texture2D>("fireball.png"), new Vector2(TheBoard.StartPointx + 650, TheBoard.StartPointy - 100), -5, Enemy, 50,50,60,33,5,Ability.AnimationDirection.Horhorizontal);
+                                break;
+                            case State.Ability2:
+                                ability = new Ability(Game.Content.Load<Texture2D>("Lightning.png"), new Vector2(Enemy.PositionX+50, 0), 5, Enemy, -50,5, 33, 60, 2, Ability.AnimationDirection.Vertical);
+                                break;
+                            default:
+                                ability = new Ability(Game.Content.Load<Texture2D>("fireball1.png"), new Vector2(TheBoard.StartPointx + 650, TheBoard.StartPointy - 100), -5, Enemy, 50,50, 60, 33, 5, Ability.AnimationDirection.Horhorizontal);
+                                break;
+                        }
+                        Game.ListofAbilities.Add(ability);
+                        _abilityCrated = true;
+                    }
                 }
             }
         }

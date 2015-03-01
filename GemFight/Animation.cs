@@ -21,6 +21,8 @@ namespace GemFight
         {
             get { return _lastFrame; }
         }
+
+        public int CurrentFrame { get { return _currentFrame; } }
         public bool Loop
         {
             get { return _loop; }

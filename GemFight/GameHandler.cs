@@ -77,6 +77,18 @@ namespace GemFight
             }
         }
 
+        public void UpdateAbilitys()
+        {
+            foreach (var ability in _game.AbilitiesRemoveAble)
+            {
+                _game.ListofAbilities.Remove(ability);
+            }
+            if (_game.AbilitiesRemoveAble.Count != 0)
+            {
+                _game.AbilitiesRemoveAble.Clear();
+            }
+        }
+
         public void AssignGem(Gem gem)
         {
             Player player = _game.Player1.HasTurn ? _game.Player2 : _game.Player1;

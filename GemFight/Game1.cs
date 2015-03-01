@@ -28,10 +28,10 @@ namespace GemFight
         public List<Gem> ListOfGems = new List<Gem>();
         public InputController InputController1 = new InputController(PlayerIndex.One);
         public InputController InputController2 = new InputController(PlayerIndex.Two){Enabled = false};
-        public ColissionHandler ColissionHandler;
-        public List<Sprite> Sprites = new List<Sprite>();
         public List<Curser> ListofCursers = new List<Curser>();
-        public List<Gem> GemsRemoveAble = new List<Gem>(); 
+        public List<Gem> GemsRemoveAble = new List<Gem>();
+        public List<Ability> ListofAbilities = new List<Ability>();
+        public List<Ability> AbilitiesRemoveAble = new List<Ability>(); 
         public Board TheBoard;
         public GameHandler Handler;
         public Player Player1;
@@ -102,15 +102,12 @@ namespace GemFight
             ListofCursers.Add(Cursor6);
             InputController1.InputGamePadButtonListeners.Add(Player1);
             InputController2.InputGamePadButtonListeners.Add(Player2);
-            ColissionHandler = new ColissionHandler(Sprites);
             foreach (var curser in ListofCursers)
             {
                 InputController1.InputGamePadDigitalDpadListeners.Add(curser);
                 InputController1.InputGamePadButtonListeners.Add(curser);
                 InputController2.InputGamePadDigitalDpadListeners.Add(curser);
                 InputController2.InputGamePadButtonListeners.Add(curser);
-                ColissionHandler.CollisionListenersList.Add(curser);
-                Sprites.Add(curser);
             }
             _font = Content.Load<SpriteFont>("SegoeUI_48");
 
@@ -152,7 +149,12 @@ namespace GemFight
             {
                 curser.Update(gameTime);
             }
+            foreach (var ability in ListofAbilities)
+            {
+                ability.Update(gameTime);
+            }
             Handler.UpdateGems();
+            Handler.UpdateAbilitys();
             Handler.UpdateMoveAble();
             Player2.Update(gameTime);
             base.Update(gameTime);
@@ -178,6 +180,10 @@ namespace GemFight
             foreach (var curser in ListofCursers)
             {
                 curser.Draw(gameTime, _spriteBatch);
+            }
+            foreach (var ability in ListofAbilities)
+            {
+                ability.Draw(gameTime,_spriteBatch);
             }
             _spriteBatch.DrawString(_font, Player1.Health.ToString(), new Vector2(100, 100), Color.DarkRed);
             _spriteBatch.DrawString(_font, Player1.BlueGems.ToString(), new Vector2(100, 200), Color.Blue);
