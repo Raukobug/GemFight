@@ -179,7 +179,7 @@ namespace GemFight
             if (YellowGems >= 20)
             {
                 YellowGems = YellowGems - 20;
-                Enemy.DoDmg(25, true);
+                Enemy.DoDmg(20, true);
             }
         }
 

@@ -43,6 +43,7 @@ namespace GemFight
         public Curser Cursor5;
         public Curser Cursor6;
         private SpriteFont _font;
+        private Sprite background;
 
         private Game1()
             : base()
@@ -84,10 +85,11 @@ namespace GemFight
             TheBoard = Board.GetInstance();
             Handler = GameHandler.GetInstance();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player1 = new Monk(Content.Load<Texture2D>("Monk.png"),new Vector2(TheBoard.StartPointx-65,TheBoard.StartPointy-200), true);
-            Player2 = new Wizard(Content.Load<Texture2D>("WizardAnimate.png"), new Vector2(TheBoard.StartPointx+600, TheBoard.StartPointy - 200), false);
+            Player1 = new Monk(Content.Load<Texture2D>("Monk.png"),new Vector2(TheBoard.StartPointx-65,TheBoard.StartPointy-220), true);
+            Player2 = new Wizard(Content.Load<Texture2D>("WizardAnimate.png"), new Vector2(TheBoard.StartPointx+600, TheBoard.StartPointy - 220), false);
             Player1.Enemy = Player2;
             Player2.Enemy = Player1;
+            background = new Sprite(Content.Load<Texture2D>("background.png"),new Vector2(0,0));
             Cursor1 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[0]);
             Cursor2 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[7]);
             Cursor3 = new Curser(Content.Load<Texture2D>("MarkerAnimate.png"), TheBoard.Pos[12]);
@@ -171,6 +173,7 @@ namespace GemFight
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
+            background.Draw(gameTime,_spriteBatch);
             foreach (var gem in ListOfGems)
             {
                 gem.Draw(gameTime, _spriteBatch);
@@ -185,18 +188,18 @@ namespace GemFight
             {
                 ability.Draw(gameTime,_spriteBatch);
             }
-            _spriteBatch.DrawString(_font, Player1.Health.ToString(), new Vector2(100, 100), Color.DarkRed);
-            _spriteBatch.DrawString(_font, Player1.BlueGems.ToString(), new Vector2(100, 200), Color.Blue);
-            _spriteBatch.DrawString(_font, Player1.GreenGems.ToString(), new Vector2(100, 300), Color.Green);
-            _spriteBatch.DrawString(_font, Player1.RedGems.ToString(), new Vector2(100, 400), Color.Red);
-            _spriteBatch.DrawString(_font, Player1.YellowGems.ToString(), new Vector2(100, 500), Color.Yellow);
-            _spriteBatch.DrawString(_font, Player1.Armor.ToString(), new Vector2(100, 600), Color.Gray);
-            _spriteBatch.DrawString(_font, Player2.Health.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 100), Color.DarkRed);
-            _spriteBatch.DrawString(_font, Player2.BlueGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 200), Color.Blue);
-            _spriteBatch.DrawString(_font, Player2.GreenGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 300), Color.Green);
-            _spriteBatch.DrawString(_font, Player2.RedGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 400), Color.Red);
-            _spriteBatch.DrawString(_font, Player2.YellowGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 500), Color.Yellow);
-            _spriteBatch.DrawString(_font, Player2.Armor.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 300, 600), Color.Gray);
+            _spriteBatch.DrawString(_font, Player1.Health.ToString(), new Vector2(40, 460), Color.DarkRed);
+            _spriteBatch.DrawString(_font, Player1.BlueGems.ToString(), new Vector2(120, 520), Color.Blue);
+            _spriteBatch.DrawString(_font, Player1.GreenGems.ToString(), new Vector2(200, 520), Color.Green);
+            _spriteBatch.DrawString(_font, Player1.RedGems.ToString(), new Vector2(280, 520), Color.Red);
+            _spriteBatch.DrawString(_font, Player1.YellowGems.ToString(), new Vector2(360, 520), Color.Yellow);
+            _spriteBatch.DrawString(_font, Player1.Armor.ToString(), new Vector2(40, 520), Color.Gray);
+            _spriteBatch.DrawString(_font, Player2.Health.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 480, 460), Color.DarkRed);
+            _spriteBatch.DrawString(_font, Player2.BlueGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 400, 520), Color.Blue);
+            _spriteBatch.DrawString(_font, Player2.GreenGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 320, 520), Color.Green);
+            _spriteBatch.DrawString(_font, Player2.RedGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 240, 520), Color.Red);
+            _spriteBatch.DrawString(_font, Player2.YellowGems.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 160, 520), Color.Yellow);
+            _spriteBatch.DrawString(_font, Player2.Armor.ToString(), new Vector2(Graphics.PreferredBackBufferWidth - 480, 520), Color.Gray);
             _spriteBatch.DrawString(_font, ListOfGems.Count.ToString(), new Vector2((TheBoard.StartPointx+350), 400), Color.Black);
             _spriteBatch.End();
             base.Draw(gameTime);
