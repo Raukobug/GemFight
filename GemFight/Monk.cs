@@ -143,14 +143,14 @@ namespace GemFight
             if (GreenGems >= 20)
             {
                 GreenGems = GreenGems - 20;
-                Enemy.DoDmg(30, false);
+                Enemy.DoDmg(25, false);
             }
         }
         public override void Ability3()
         {
-            if (GreenGems >= 5 && BlueGems >= 5)
+            if (RedGems >= 5 && BlueGems >= 5)
             {
-                GreenGems = GreenGems - 5;
+                RedGems = RedGems - 5;
                 BlueGems = BlueGems - 5;
                 foreach (var gem in Game.ListOfGems)
                 {
