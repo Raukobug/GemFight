@@ -107,7 +107,7 @@ namespace GemFight
                     player.YellowGems++;
                     break;
                 case GemColor.Gray:
-                    player.Armor = player.Armor++;
+                    player.Armor++;
                     break;
                 case GemColor.Black:
                     if (player == _game.Player1)
