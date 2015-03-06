@@ -22,6 +22,7 @@ namespace GemFight
     /// </summary>
     public class Game1 : Game
     {
+        private StartScreen ss;
         private static Game1 _instance = null;
         public GraphicsDeviceManager Graphics;
         SpriteBatch _spriteBatch;
@@ -81,8 +82,8 @@ namespace GemFight
             var screen = Screen.AllScreens.First(e => e.Primary);
             Window.IsBorderless = true;
             Window.Position = new Point(screen.Bounds.X, screen.Bounds.Y);
-            Graphics.PreferredBackBufferWidth = 1680;
-            Graphics.PreferredBackBufferHeight = 1050;
+            Graphics.PreferredBackBufferWidth = screen.Bounds.Width;
+            Graphics.PreferredBackBufferHeight = screen.Bounds.Height;
             Graphics.ApplyChanges();
             base.Initialize();
         }
@@ -106,7 +107,7 @@ namespace GemFight
             centerBoard = new Sprite(Content.Load<Texture2D>("centerBoard.png"), new Vector2(TheBoard.StartPointx+67,TheBoard.StartPointy+65));
             rightBoard = new Sprite(Content.Load<Texture2D>("Sitebar.png"), new Vector2(TheBoard.StartPointx - 435, TheBoard.StartPointy + 65));
             leftBoard = new Sprite(Content.Load<Texture2D>("Sitebar.png"), new Vector2(TheBoard.StartPointx + 729, TheBoard.StartPointy + 65));
-
+            ss = new StartScreen(Content.Load<Texture2D>("Startscreen.png"), new Vector2(0, 0));
             Player1SiteTop = new Sprite(Content.Load<Texture2D>("topSiteBar.png"), new Vector2(TheBoard.StartPointx - 424, TheBoard.StartPointy + 80));
             Player1Ability1 = new Sprite(Content.Load<Texture2D>("MonkAbility1.png"), new Vector2(TheBoard.StartPointx - 424, TheBoard.StartPointy + 226));
             Player1Ability2 = new Sprite(Content.Load<Texture2D>("MonkAbility2.png"), new Vector2(TheBoard.StartPointx - 424, TheBoard.StartPointy + 372));
@@ -200,44 +201,46 @@ namespace GemFight
             _spriteBatch.Begin();
             background.Draw(gameTime,_spriteBatch);
             backgroundEarth.Draw(gameTime, _spriteBatch);
-            centerBoard.Draw(gameTime,_spriteBatch);
-            leftBoard.Draw(gameTime, _spriteBatch);
-            rightBoard.Draw(gameTime, _spriteBatch);
-            Player1SiteTop.Draw(gameTime, _spriteBatch);
-            Player1Ability1.Draw(gameTime, _spriteBatch);
-            Player1Ability2.Draw(gameTime, _spriteBatch);
-            Player1Ability3.Draw(gameTime, _spriteBatch);
-            Player2SiteTop.Draw(gameTime, _spriteBatch);
-            Player2Ability1.Draw(gameTime, _spriteBatch);
-            Player2Ability2.Draw(gameTime, _spriteBatch);
-            Player2Ability3.Draw(gameTime, _spriteBatch);
-            foreach (var gem in ListOfGems)
-            {
-                gem.Draw(gameTime, _spriteBatch);
-            }
-            Player1.Draw(gameTime, _spriteBatch);
-            Player2.Draw(gameTime,_spriteBatch);
-            foreach (var curser in ListofCursers)
-            {
-                curser.Draw(gameTime, _spriteBatch);
-            }
-            foreach (var ability in ListofAbilities)
-            {
-                ability.Draw(gameTime,_spriteBatch);
-            }
-            _spriteBatch.DrawString(_font, Player1.Health.ToString(), new Vector2(TheBoard.StartPointx - 410, TheBoard.StartPointy + 70), Color.DarkRed);
-            _spriteBatch.DrawString(_font, Player1.BlueGems.ToString(), new Vector2(TheBoard.StartPointx - 330, TheBoard.StartPointy + 130), Color.Blue);
-            _spriteBatch.DrawString(_font, Player1.GreenGems.ToString(), new Vector2(TheBoard.StartPointx - 250, TheBoard.StartPointy + 130), Color.Green);
-            _spriteBatch.DrawString(_font, Player1.RedGems.ToString(), new Vector2(TheBoard.StartPointx - 180, TheBoard.StartPointy + 130), Color.Red);
-            _spriteBatch.DrawString(_font, Player1.YellowGems.ToString(), new Vector2(TheBoard.StartPointx - 100, TheBoard.StartPointy + 130), Color.Yellow);
-            _spriteBatch.DrawString(_font, Player1.Armor.ToString(), new Vector2(TheBoard.StartPointx - 410, TheBoard.StartPointy + 130), Color.Gray);
-            _spriteBatch.DrawString(_font, Player2.Health.ToString(), new Vector2(TheBoard.EndPointx + 165, TheBoard.StartPointy + 70), Color.DarkRed);
-            _spriteBatch.DrawString(_font, Player2.BlueGems.ToString(), new Vector2(TheBoard.EndPointx + 254, TheBoard.StartPointy + 130), Color.Blue);
-            _spriteBatch.DrawString(_font, Player2.GreenGems.ToString(), new Vector2(TheBoard.EndPointx + 325, TheBoard.StartPointy + 130), Color.Green);
-            _spriteBatch.DrawString(_font, Player2.RedGems.ToString(), new Vector2(TheBoard.EndPointx + 405, TheBoard.StartPointy + 130), Color.Red);
-            _spriteBatch.DrawString(_font, Player2.YellowGems.ToString(), new Vector2(TheBoard.EndPointx + 485, TheBoard.StartPointy + 130), Color.Yellow);
-            _spriteBatch.DrawString(_font, Player2.Armor.ToString(), new Vector2(TheBoard.EndPointx + 165, TheBoard.StartPointy + 130), Color.Gray);
-            _spriteBatch.DrawString(_font, ListOfGems.Count.ToString(), new Vector2((TheBoard.StartPointx + 350), TheBoard.StartPointy), Color.Black);
+            ss.Draw(gameTime, _spriteBatch);
+            //centerBoard.Draw(gameTime,_spriteBatch);
+            //leftBoard.Draw(gameTime, _spriteBatch);
+            //rightBoard.Draw(gameTime, _spriteBatch);
+            //Player1SiteTop.Draw(gameTime, _spriteBatch);
+            //Player1Ability1.Draw(gameTime, _spriteBatch);
+            //Player1Ability2.Draw(gameTime, _spriteBatch);
+            //Player1Ability3.Draw(gameTime, _spriteBatch);
+            //Player2SiteTop.Draw(gameTime, _spriteBatch);
+            //Player2Ability1.Draw(gameTime, _spriteBatch);
+            //Player2Ability2.Draw(gameTime, _spriteBatch);
+            //Player2Ability3.Draw(gameTime, _spriteBatch);
+            //foreach (var gem in ListOfGems)
+            //{
+            //    gem.Draw(gameTime, _spriteBatch);
+            //}
+            //Player1.Draw(gameTime, _spriteBatch);
+            //Player2.Draw(gameTime,_spriteBatch);
+            //foreach (var curser in ListofCursers)
+            //{
+            //    curser.Draw(gameTime, _spriteBatch);
+            //}
+            //foreach (var ability in ListofAbilities)
+            //{
+            //    ability.Draw(gameTime,_spriteBatch);
+            //}
+            //_spriteBatch.DrawString(_font, Player1.Health.ToString(), new Vector2(TheBoard.StartPointx - 410, TheBoard.StartPointy + 70), Color.DarkRed);
+            //_spriteBatch.DrawString(_font, Player1.BlueGems.ToString(), new Vector2(TheBoard.StartPointx - 330, TheBoard.StartPointy + 130), Color.Blue);
+            //_spriteBatch.DrawString(_font, Player1.GreenGems.ToString(), new Vector2(TheBoard.StartPointx - 250, TheBoard.StartPointy + 130), Color.Green);
+            //_spriteBatch.DrawString(_font, Player1.RedGems.ToString(), new Vector2(TheBoard.StartPointx - 180, TheBoard.StartPointy + 130), Color.Red);
+            //_spriteBatch.DrawString(_font, Player1.YellowGems.ToString(), new Vector2(TheBoard.StartPointx - 100, TheBoard.StartPointy + 130), Color.Yellow);
+            //_spriteBatch.DrawString(_font, Player1.Armor.ToString(), new Vector2(TheBoard.StartPointx - 410, TheBoard.StartPointy + 130), Color.Gray);
+            //_spriteBatch.DrawString(_font, Player2.Health.ToString(), new Vector2(TheBoard.EndPointx + 165, TheBoard.StartPointy + 70), Color.DarkRed);
+            //_spriteBatch.DrawString(_font, Player2.BlueGems.ToString(), new Vector2(TheBoard.EndPointx + 254, TheBoard.StartPointy + 130), Color.Blue);
+            //_spriteBatch.DrawString(_font, Player2.GreenGems.ToString(), new Vector2(TheBoard.EndPointx + 325, TheBoard.StartPointy + 130), Color.Green);
+            //_spriteBatch.DrawString(_font, Player2.RedGems.ToString(), new Vector2(TheBoard.EndPointx + 405, TheBoard.StartPointy + 130), Color.Red);
+            //_spriteBatch.DrawString(_font, Player2.YellowGems.ToString(), new Vector2(TheBoard.EndPointx + 485, TheBoard.StartPointy + 130), Color.Yellow);
+            //_spriteBatch.DrawString(_font, Player2.Armor.ToString(), new Vector2(TheBoard.EndPointx + 165, TheBoard.StartPointy + 130), Color.Gray);
+            //_spriteBatch.DrawString(_font, ListOfGems.Count.ToString(), new Vector2((TheBoard.StartPointx + 350), TheBoard.StartPointy), Color.Black);
+            ss.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

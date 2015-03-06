@@ -38,6 +38,7 @@
     <Compile Include="Ability.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="StartScreen.cs" />
     <Compile Include="curser.cs" />
     <Compile Include="Framework\ColissionHandler.cs" />
     <Compile Include="Framework\ICollidable.cs" />
@@ -108,6 +109,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sitebar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\StartScreen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\topSiteBar.png">
