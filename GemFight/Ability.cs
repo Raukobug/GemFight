@@ -43,6 +43,7 @@ namespace GemFight
             {
                 _animation.Frames.Add(new Rectangle(_imageWidth * i, 0, _imageWidth, _imageHeight));
             }
+            _game.sound.Play();
 
 
 

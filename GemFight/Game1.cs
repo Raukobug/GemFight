@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Windows.Forms;
 using GemFight.Framework;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -60,6 +62,7 @@ namespace GemFight
         private Sprite Player2Ability3;
         private Sprite Player1SiteTop;
         private Sprite Player2SiteTop;
+        public SoundEffect sound;
 
         private Game1()
             : base()
@@ -144,7 +147,8 @@ namespace GemFight
                 InputController2.InputGamePadButtonListeners.Add(curser);
             }
             _font = Content.Load<SpriteFont>("SegoeUI_48");
-
+            sound = Content.Load<SoundEffect>("crystalShatter");
+            SoundEffect.MasterVolume = 0.1f;
 
             // TODO: use this.Content to load your game content here
 

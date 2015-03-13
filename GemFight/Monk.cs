@@ -1,5 +1,7 @@
-﻿using GemFight.Framework;
+﻿using System.Web.UI.WebControls;
+using GemFight.Framework;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
@@ -54,10 +56,13 @@ namespace GemFight
 
         public override void ButtonADown(InputController.ButtonStates buttonStates)
         {
+
             if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
             {
                 Handler.SwitchPlayer(this);
                 Enemy.CursorSetup1();
+                Game.sound = Game.Content.Load<SoundEffect>("crystalShatter");
+                Game.sound.Play();
             } 
         }
 

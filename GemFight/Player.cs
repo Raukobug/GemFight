@@ -38,6 +38,7 @@ namespace GemFight
 
         public virtual void ButtonADown(InputController.ButtonStates buttonStates)
         {
+            Game.sound.Play();
         }
 
         public virtual void ButtonBDown(InputController.ButtonStates buttonStates)

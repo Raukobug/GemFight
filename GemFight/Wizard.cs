@@ -1,6 +1,7 @@
 ﻿using System.Web.UI.WebControls;
 using GemFight.Framework;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
@@ -62,6 +63,7 @@ namespace GemFight
 
         public override void ButtonADown(InputController.ButtonStates buttonStates)
         {
+
             if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
             {
                 if (_extraTurn)
@@ -73,6 +75,8 @@ namespace GemFight
                     Handler.SwitchPlayer(this);
                     Enemy.CursorSetup1();
                 }
+                Game.sound = Game.Content.Load<SoundEffect>("crystalShatter");
+                Game.sound.Play();
             } 
         }
         public override void ButtonXDown(InputController.ButtonStates buttonStates)
@@ -145,6 +149,7 @@ namespace GemFight
 
         public override void Ability1()
         {
+            Game.sound = Game.Content.Load<SoundEffect>("fireball");
             Animation = new Animation(this) { Delay = 100, Loop = false };
             Animation.Frames.Add(new Rectangle(0, ImageHeight, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
@@ -164,6 +169,7 @@ namespace GemFight
 
         public override void Ability2()
         {
+            Game.sound = Game.Content.Load<SoundEffect>("lightning");
             Animation = new Animation(this) { Delay = 80, Loop = false };
             Animation.Frames.Add(new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
