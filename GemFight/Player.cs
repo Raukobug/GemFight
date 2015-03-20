@@ -22,7 +22,7 @@ namespace GemFight
         protected Animation Animation;
         protected const int ImageWidth = 250;
         protected const int ImageHeight = 300;
-        public int Health = 100;
+        public int Health = 75;
         public int Armor = 0;
         public int BlueGems = 0;
         public int GreenGems = 0;
@@ -30,17 +30,29 @@ namespace GemFight
         public int YellowGems = 0;
         public bool HasTurn;
         public Player Enemy;
-        public Player(Texture2D spriteTexture, Vector2 position, bool hasTurn) : base(spriteTexture, position)
+        public int PlayerNumber;
+        public bool ExtraTurn;
+        public Player(Texture2D spriteTexture, Vector2 position, bool hasTurn, int playerNumber)
+            : base(spriteTexture, position)
         {
             HasTurn = hasTurn;
+            PlayerNumber = playerNumber;
             SourceRectangle = new Rectangle(0, 0, ImageWidth, ImageHeight);
         }
 
         public virtual void ButtonADown(InputController.ButtonStates buttonStates)
         {
-            Game.sound.Play();
         }
 
+        public void Reset()
+        {
+            Health = 75;
+            Armor = 0;
+            BlueGems = 0;
+            GreenGems = 0;
+            RedGems = 0;
+            YellowGems = 0;
+        }
         public virtual void ButtonBDown(InputController.ButtonStates buttonStates)
         {
             //throw new NotImplementedException();
@@ -88,7 +100,7 @@ namespace GemFight
 
         public virtual void CursorSetup1()
         {
-            
+
         }
 
         public virtual void CursorSetup2()
@@ -118,14 +130,20 @@ namespace GemFight
                     else
                     {
                         Health--;
-                    }                  
+                    }
                 }
+            }
+            if (Health < 1)
+            {
+                Game.winner = Enemy.ToString().Replace("GemFight.", "");
+                Game.gameState = Game1.GameState.Win;
+                Handler.SwitchPlayer(Enemy);
             }
         }
 
         public virtual void Ability1()
         {
-            
+
         }
         public virtual void Ability2()
         {

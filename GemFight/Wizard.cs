@@ -9,13 +9,12 @@ namespace GemFight
     public class Wizard : Player
     {
 
-        private bool _extraTurn;
         private State _state;
         private int _spawnSpriteOnFrame;
         private bool _abilityCrated = false;
 
-        public Wizard(Texture2D spriteTexture, Vector2 position, bool hasTurn)
-            : base(spriteTexture, position, hasTurn)
+        public Wizard(Texture2D spriteTexture, Vector2 position, bool hasTurn, int playerNumber)
+            : base(spriteTexture, position, hasTurn, playerNumber)
         {
             WaitAnimation();
             _state = State.Wait;
@@ -40,8 +39,8 @@ namespace GemFight
             {
                 Game.Cursor1.SetPosition(TheBoard.Pos[0]);
                 Game.Cursor2.SetPosition(TheBoard.Pos[7]);
-                Game.Cursor3.SetPosition(TheBoard.Pos[14]);
-                Game.Cursor4.SetPosition(TheBoard.Pos[20]);
+                Game.Cursor3.SetPosition(TheBoard.Pos[13]);
+                Game.Cursor4.SetPosition(TheBoard.Pos[19]);
                 Game.Cursor5.SetPosition(TheBoard.Pos[25]);
                 Game.Cursor6.SetPosition(TheBoard.Pos[30]);
                 SelectCursorSetup = 2;
@@ -66,14 +65,13 @@ namespace GemFight
 
             if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
             {
-                if (_extraTurn)
+                if (ExtraTurn)
                 {
-                    _extraTurn = false;
+                    ExtraTurn = false;
                 }
                 else
                 {
                     Handler.SwitchPlayer(this);
-                    Enemy.CursorSetup1();
                 }
                 Game.sound = Game.Content.Load<SoundEffect>("crystalShatter");
                 Game.sound.Play();
@@ -121,6 +119,10 @@ namespace GemFight
                             CursorSetup2();
                             break;
                     }
+                    foreach (var curser in Game.ListofCursers)
+                    {
+                        curser.SelectedSprite = null;
+                    }
                 }
             }
         }
@@ -143,23 +145,27 @@ namespace GemFight
                             CursorSetup1();
                             break;
                     }
+                    foreach (var curser in Game.ListofCursers)
+                    {
+                        curser.SelectedSprite = null;
+                    }
                 }
             }
         }
 
         public override void Ability1()
         {
-            Game.sound = Game.Content.Load<SoundEffect>("fireball");
-            Animation = new Animation(this) { Delay = 100, Loop = false };
-            Animation.Frames.Add(new Rectangle(0, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
-            _state = State.Ability1;
             _spawnSpriteOnFrame = 3;
+            _state = State.Ability1;
             if (RedGems >= 3 && GreenGems >= 3)
             {
+                Game.sound = Game.Content.Load<SoundEffect>("fireball");
+                Animation = new Animation(this) { Delay = 100, Loop = false };
+                Animation.Frames.Add(new Rectangle(0, ImageHeight, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
                 RedGems = RedGems - 3;
                 GreenGems = GreenGems - 3;
 
@@ -169,21 +175,21 @@ namespace GemFight
 
         public override void Ability2()
         {
-            Game.sound = Game.Content.Load<SoundEffect>("lightning");
-            Animation = new Animation(this) { Delay = 80, Loop = false };
-            Animation.Frames.Add(new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
-            Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
-            _spawnSpriteOnFrame = 5;
             _state = State.Ability2;
+            _spawnSpriteOnFrame = 5;
             if (YellowGems >= 20)
             {
+                Game.sound = Game.Content.Load<SoundEffect>("lightning");
+                Animation = new Animation(this) { Delay = 80, Loop = false };
+                Animation.Frames.Add(new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth * 4, ImageHeight * 3, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth * 3, ImageHeight * 3, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 3, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
+                Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
                 YellowGems = YellowGems - 20;
                 Enemy.DoDmg(20, true);
             }
@@ -191,6 +197,7 @@ namespace GemFight
 
         public override void Ability3()
         {
+            Game.sound = Game.Content.Load<SoundEffect>("ice");
             Animation = new Animation(this) { Delay = 80, Loop = false };
             Animation.Frames.Add(new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 2, ImageWidth, ImageHeight));
@@ -205,8 +212,9 @@ namespace GemFight
             _state = State.Ability3;
             if (BlueGems >= 10)
             {
+
                 BlueGems = BlueGems - 10;
-                _extraTurn = true;
+                ExtraTurn = true;
             }
         }
 
@@ -235,7 +243,7 @@ namespace GemFight
                                 ability = new Ability(Game.Content.Load<Texture2D>("Lightning.png"), new Vector2(Enemy.PositionX+50, 0), 5, Enemy, -50,5, 33, 60, 2, Ability.AnimationDirection.Vertical);
                                 break;
                             default:
-                                ability = new Ability(Game.Content.Load<Texture2D>("fireball1.png"), new Vector2(TheBoard.StartPointx + 650, TheBoard.StartPointy - 100), -5, Enemy, 50,50, 60, 33, 5, Ability.AnimationDirection.Horhorizontal);
+                                ability = new Ability(Game.Content.Load<Texture2D>("ice.png"), new Vector2(TheBoard.StartPointx + 650, TheBoard.StartPointy-40), -15, Enemy, 50,50, 120, 100, 5, Ability.AnimationDirection.Horhorizontal);
                                 break;
                         }
                         Game.ListofAbilities.Add(ability);

@@ -24,9 +24,11 @@ namespace GemFight
         private const int ImageHeight = 88;
         private Animation _animation;
         private Game1 _game = Game1.GetInstance();
+        public Effect Effect;
         public Gem(Texture2D spriteTexture, Vector2 position, int i)
             : base(spriteTexture, position)
         {
+            Effect = new Effect(this);
             switch (i)
             {
                 case 0:
@@ -128,6 +130,7 @@ namespace GemFight
             if (_animation != null)
             {
                 _animation.Update(gameTime);
+                Effect.JumpThenFallDown(gameTime);
                 if (_animation.LastFrame)
                 {
                     _game.GemsRemoveAble.Add(this);                      

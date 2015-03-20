@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
 {
@@ -44,12 +46,13 @@ namespace GemFight
 
         public void SwitchPlayer(Player player)
         {
-            if (player is Monk)
+            if (player.PlayerNumber == 1)
             {
                 _game.Player2.HasTurn = true;
                 player.HasTurn = false;
                 _game.InputController1.Enabled = false;
                 _game.InputController2.Enabled = true;
+                player.Enemy.CursorSetup1();
             }
             else
             {
@@ -57,6 +60,7 @@ namespace GemFight
                 player.HasTurn = false;
                 _game.InputController1.Enabled = true;
                 _game.InputController2.Enabled = false;
+                player.Enemy.CursorSetup1();
             }
         }
 
@@ -91,7 +95,16 @@ namespace GemFight
 
         public void AssignGem(Gem gem)
         {
-            Player player = _game.Player1.HasTurn ? _game.Player2 : _game.Player1;
+            Player player;
+            if (_game.Player1.ExtraTurn == false || _game.Player2.ExtraTurn == false)
+            {
+                player = _game.Player1.HasTurn ? _game.Player2 : _game.Player1;
+            }
+            else
+            {
+                player = _game.Player1.HasTurn ? _game.Player1 : _game.Player2;
+            }
+
             switch (gem.GemColor)
             {
                 case GemColor.Blue:
@@ -124,13 +137,19 @@ namespace GemFight
 
         public void UpdateMoveAble()
         {
-            _ableToMoveUp = !_game.ListofCursers.Any(c => c.PositionY < _board.StartPointy+93);
+            _ableToMoveUp = !_game.ListofCursers.Any(c => c.PositionY < _board.StartPointy + 93);
 
             _ableToMoveDown = !_game.ListofCursers.Any(c => c.PositionY > _board.EndPointy - 93);
 
             _ableToMoveLeft = !_game.ListofCursers.Any(c => c.PositionX < _board.StartPointx + 97);
 
             _ableToMoveRight = !_game.ListofCursers.Any(c => c.PositionX > _board.EndPointx - 97);
+        }
+        public void ResetGame()
+        {
+            _game.Player1.Reset();
+            _game.Player2.Reset();
+            _board.GenerateGems();
         }
     }
 }

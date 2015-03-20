@@ -38,6 +38,8 @@
     <Compile Include="Ability.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="Effect.cs" />
     <Compile Include="StartScreen.cs" />
     <Compile Include="curser.cs" />
     <Compile Include="Framework\ColissionHandler.cs" />
@@ -85,6 +87,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Gems.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ice.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\lightning.png">
@@ -136,6 +141,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\fireball.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\ice.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\lightning.xnb">

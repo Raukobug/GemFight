@@ -9,7 +9,8 @@ namespace GemFight
     public class Monk : Player
     {
         private int _powerUp = 1;
-        public Monk(Texture2D spriteTexture, Vector2 position, bool hasTurn) : base(spriteTexture, position, hasTurn)
+        public Monk(Texture2D spriteTexture, Vector2 position, bool hasTurn, int playerNumber)
+            : base(spriteTexture, position, hasTurn, playerNumber)
         {
             
         }
@@ -60,10 +61,9 @@ namespace GemFight
             if (HasTurn && buttonStates == InputController.ButtonStates.JustPressed)
             {
                 Handler.SwitchPlayer(this);
-                Enemy.CursorSetup1();
                 Game.sound = Game.Content.Load<SoundEffect>("crystalShatter");
                 Game.sound.Play();
-            } 
+            }
         }
 
         public override void ButtonXDown(InputController.ButtonStates buttonStates)
@@ -108,6 +108,10 @@ namespace GemFight
                             CursorSetup2();
                             break;
                     }
+                    foreach (var curser in Game.ListofCursers)
+                    {
+                        curser.SelectedSprite = null;
+                    }
                 }
             }
         }
@@ -129,6 +133,10 @@ namespace GemFight
                         case 3:
                             CursorSetup1();
                             break;
+                    }
+                    foreach (var curser in Game.ListofCursers)
+                    {
+                        curser.SelectedSprite = null;
                     }
                 }
             }
@@ -153,10 +161,10 @@ namespace GemFight
         }
         public override void Ability3()
         {
-            if (RedGems >= 5 && BlueGems >= 5)
+            if (RedGems >= 7 && BlueGems >= 7)
             {
-                RedGems = RedGems - 5;
-                BlueGems = BlueGems - 5;
+                RedGems = RedGems - 7;
+                BlueGems = BlueGems - 7;
                 foreach (var gem in Game.ListOfGems)
                 {
                     if (gem.GemColor == GemColor.Black)

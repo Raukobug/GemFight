@@ -7,7 +7,7 @@ namespace GemFight
     public class Curser : Sprite, IInputGamePadDigitalDpad, IInputGamePadButtons, ICollidable
     {
         private Animation _animation;
-        private Sprite _selectedSprite;
+        public Sprite SelectedSprite = null;
         private GameHandler _handler = GameHandler.GetInstance();
         public Curser(Texture2D spriteTexture, Vector2 position) : base(spriteTexture, position)
         {
@@ -38,7 +38,7 @@ namespace GemFight
                     PositionY = PositionY + 94;                   
                 }
             }
-            _selectedSprite = null;
+            SelectedSprite = null;
         }
 
         public void ButtonDpadUpPressed(InputController.ButtonStates buttonStates)
@@ -50,7 +50,7 @@ namespace GemFight
                     PositionY = PositionY - 94;                   
                 }
             }
-            _selectedSprite = null;
+            SelectedSprite = null;
         }
 
         public void ButtonDpadLeftPressed(InputController.ButtonStates buttonStates)
@@ -62,7 +62,7 @@ namespace GemFight
                     PositionX = PositionX - 97;
                 }
             }
-            _selectedSprite = null;
+            SelectedSprite = null;
         }
 
         public void ButtonDpadRightPressed(InputController.ButtonStates buttonStates)
@@ -74,24 +74,19 @@ namespace GemFight
                     PositionX = PositionX + 97;
                 }
             }
-            _selectedSprite = null;
+            SelectedSprite = null;
         }
 
         public void ButtonADown(InputController.ButtonStates buttonStates)
         {
             if (buttonStates == InputController.ButtonStates.JustPressed)
             {
-                Gem gem = (Gem)_selectedSprite;
+                Gem gem = (Gem)SelectedSprite;
                 if (gem != null)
                 {
-                    gem.Destroy();                   
+                    gem.Destroy();
                 }
             }
-        }
-
-        public void ButtonADown(InputController.ButtonStates buttonStates, InputController controller)
-        {
-            
         }
 
         public void ButtonBDown(InputController.ButtonStates buttonStates)
@@ -140,7 +135,7 @@ namespace GemFight
         {
             if (BoundingBox.Intersects(other.BoundingBox))
             {
-                _selectedSprite = other;
+                SelectedSprite = other;
             }
         }
 

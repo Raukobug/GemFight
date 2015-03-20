@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GemFight.Framework;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GemFight
@@ -26,6 +27,7 @@ namespace GemFight
         private int _frameNumber;
         private bool _endAnimation;
         private AnimationDirection _direction;
+        private GameHandler _handler = GameHandler.GetInstance();
         public Ability(Texture2D spriteTexture, Vector2 position, int speed, Player destroyOnContact, int removeAtX, int removeAtY, int imageWidth, int imageHeight, int frameNumber, AnimationDirection direction)
             : base(spriteTexture, position)
         {
@@ -90,6 +92,7 @@ namespace GemFight
                     if (_animation.LastFrame)
                     {
                         _game.AbilitiesRemoveAble.Add(this);
+                        
                     }
                     _endAnimation = true;
                 }
