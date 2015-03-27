@@ -50,8 +50,8 @@ namespace GemFight
         public Curser Cursor5;
         public Curser Cursor6;
         private SpriteFont _font;
-        private Sprite background;
-        private Sprite backgroundEarth;
+        private Sprite _background;
+        private Sprite _backgroundEarth;
         private Sprite centerBoard;
         private Sprite leftBoard;
         private Sprite rightBoard;
@@ -63,8 +63,8 @@ namespace GemFight
         private Sprite Player2Ability3;
         private Sprite Player1SiteTop;
         private Sprite Player2SiteTop;
-        public SoundEffect sound;
-        public string winner;
+        public SoundEffect Sound;
+        public string Winner;
         public List<Sprite> BoardPices = new List<Sprite>();
 
         private Game1()
@@ -113,14 +113,15 @@ namespace GemFight
             Handler = GameHandler.GetInstance();
             Camera = new Camera(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player1 = new Monk(Content.Load<Texture2D>("Monk.png"), new Vector2(TheBoard.StartPointx - 65, TheBoard.StartPointy - 220), true, 1);
+            Player1 = new Monk(Content.Load<Texture2D>("MonkAnimate.png"), new Vector2(TheBoard.StartPointx - 65, TheBoard.StartPointy - 240), true, 1);
             Player2 = new Wizard(Content.Load<Texture2D>("WizardAnimate.png"), new Vector2(TheBoard.StartPointx + 600, TheBoard.StartPointy - 220), false, 2);
             Player1.Enemy = Player2;
             Player2.Enemy = Player1;
             Camera.Add(Player1);
             Camera.Add(Player2);
-            background = new Sprite(Content.Load<Texture2D>("background.png"), new Vector2((Camera.CenterX()) - 1250, 0));
-            backgroundEarth = new Sprite(Content.Load<Texture2D>("backgroundEarth.png"), new Vector2((Camera.CenterX()) - 1250, 26));
+            _background = new Sprite(Content.Load<Texture2D>("background.png"), new Vector2((Camera.CenterX()) - 1250, 0));
+            _backgroundEarth = new Sprite(Content.Load<Texture2D>("backgroundEarth.png"), new Vector2((Camera.CenterX()) - 1250, 26));
+            Camera.Add(_backgroundEarth);
             BoardPices.Add(centerBoard = new Sprite(Content.Load<Texture2D>("centerBoard.png"), new Vector2(TheBoard.StartPointx + 67, TheBoard.StartPointy + 65)));
             BoardPices.Add(rightBoard = new Sprite(Content.Load<Texture2D>("Sitebar.png"), new Vector2(TheBoard.StartPointx - 435, TheBoard.StartPointy + 65)));
             BoardPices.Add(leftBoard = new Sprite(Content.Load<Texture2D>("Sitebar.png"), new Vector2(TheBoard.StartPointx + 729, TheBoard.StartPointy + 65)));
@@ -231,6 +232,7 @@ namespace GemFight
                     }
                     Handler.UpdateAbilitys();
                     Handler.UpdateMoveAble();
+                    Player1.Update(gameTime);
                     Player2.Update(gameTime);
                     Camera.Shake(gameTime);
                     break;
@@ -259,8 +261,8 @@ namespace GemFight
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
-            background.Draw(gameTime, _spriteBatch);
-            backgroundEarth.Draw(gameTime, _spriteBatch);
+            _background.Draw(gameTime, _spriteBatch);
+            _backgroundEarth.Draw(gameTime, _spriteBatch);
             switch (gameState)
             {
                 case GameState.Intro:
@@ -300,7 +302,7 @@ namespace GemFight
                     _spriteBatch.DrawString(_font, ListOfGems.Count.ToString(), new Vector2((TheBoard.StartPointx + 350), TheBoard.StartPointy), Color.Black);
                     break;
                 case GameState.Win:
-                    _spriteBatch.DrawString(_font, "Winner is " + winner, new Vector2((TheBoard.StartPointx + 350), TheBoard.StartPointy - 200), Color.Black);
+                    _spriteBatch.DrawString(_font, "Winner is " + Winner, new Vector2((TheBoard.StartPointx + 350), TheBoard.StartPointy - 200), Color.Black);
                     _spriteBatch.DrawString(_font, "Press A to continue", new Vector2((TheBoard.StartPointx + 350), TheBoard.StartPointy - 120), Color.Black);
                     break;
             }

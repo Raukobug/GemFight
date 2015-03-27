@@ -9,15 +9,11 @@ namespace GemFight
     public class Wizard : Player
     {
 
-        private State _state;
-        private int _spawnSpriteOnFrame;
-        private bool _abilityCrated = false;
-
         public Wizard(Texture2D spriteTexture, Vector2 position, bool hasTurn, int playerNumber)
             : base(spriteTexture, position, hasTurn, playerNumber)
         {
             WaitAnimation();
-            _state = State.Wait;
+            state = State.Wait;
         }
 
         public override void CursorSetup1()
@@ -73,8 +69,8 @@ namespace GemFight
                 {
                     Handler.SwitchPlayer(this);
                 }
-                Game.sound = Game.Content.Load<SoundEffect>("crystalShatter");
-                Game.sound.Play();
+                Game.Sound = Game.Content.Load<SoundEffect>("crystalShatter");
+                Game.Sound.Play();
             } 
         }
         public override void ButtonXDown(InputController.ButtonStates buttonStates)
@@ -155,11 +151,11 @@ namespace GemFight
 
         public override void Ability1()
         {
-            _spawnSpriteOnFrame = 3;
-            _state = State.Ability1;
+            SpawnSpriteOnFrame = 3;
+            state = State.Ability1;
             if (RedGems >= 3 && GreenGems >= 3)
             {
-                Game.sound = Game.Content.Load<SoundEffect>("fireball");
+                Game.Sound = Game.Content.Load<SoundEffect>("fireball");
                 Animation = new Animation(this) { Delay = 100, Loop = false };
                 Animation.Frames.Add(new Rectangle(0, ImageHeight, ImageWidth, ImageHeight));
                 Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight, ImageWidth, ImageHeight));
@@ -175,11 +171,11 @@ namespace GemFight
 
         public override void Ability2()
         {
-            _state = State.Ability2;
-            _spawnSpriteOnFrame = 5;
+            state = State.Ability2;
+            SpawnSpriteOnFrame = 5;
             if (YellowGems >= 20)
             {
-                Game.sound = Game.Content.Load<SoundEffect>("lightning");
+                Game.Sound = Game.Content.Load<SoundEffect>("lightning");
                 Animation = new Animation(this) { Delay = 80, Loop = false };
                 Animation.Frames.Add(new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight));
                 Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 3, ImageWidth, ImageHeight));
@@ -197,7 +193,7 @@ namespace GemFight
 
         public override void Ability3()
         {
-            Game.sound = Game.Content.Load<SoundEffect>("ice");
+            Game.Sound = Game.Content.Load<SoundEffect>("ice");
             Animation = new Animation(this) { Delay = 80, Loop = false };
             Animation.Frames.Add(new Rectangle(0, ImageHeight * 2, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 2, ImageWidth, ImageHeight));
@@ -208,8 +204,8 @@ namespace GemFight
             Animation.Frames.Add(new Rectangle(ImageWidth * 2, ImageHeight * 2, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(ImageWidth, ImageHeight * 2, ImageWidth, ImageHeight));
             Animation.Frames.Add(new Rectangle(0, 0, ImageWidth, ImageHeight));
-            _spawnSpriteOnFrame = 5;
-            _state = State.Ability3;
+            SpawnSpriteOnFrame = 5;
+            state = State.Ability3;
             if (BlueGems >= 10)
             {
 
@@ -223,18 +219,18 @@ namespace GemFight
             if (Animation != null)
             {
                 Animation.Update(gameTime);
-                if (Animation.LastFrame && _state != State.Wait)
+                if (Animation.LastFrame && state != State.Wait)
                 {
                     WaitAnimation();
-                    _state = State.Wait;
-                    _abilityCrated = false;
+                    state = State.Wait;
+                    AbilityCrated = false;
                 }
                 else
                 {
-                    if (Animation.CurrentFrame == _spawnSpriteOnFrame && _spawnSpriteOnFrame != 0 && !_abilityCrated)
+                    if (Animation.CurrentFrame == SpawnSpriteOnFrame && SpawnSpriteOnFrame != 0 && !AbilityCrated)
                     {
                         Ability ability;
-                        switch (_state)
+                        switch (state)
                         {
                             case State.Ability1:
                                 ability = new Ability(Game.Content.Load<Texture2D>("fireball.png"), new Vector2(TheBoard.StartPointx + 650, TheBoard.StartPointy - 100), -5, Enemy, 50,50,60,33,5,Ability.AnimationDirection.Horhorizontal);
@@ -247,27 +243,8 @@ namespace GemFight
                                 break;
                         }
                         Game.ListofAbilities.Add(ability);
-                        _abilityCrated = true;
+                        AbilityCrated = true;
                     }
-                }
-            }
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            // Do we have a texture? If not then there is nothing to draw...
-            if (SpriteTexture != null)
-            {
-                // Has a source rectangle been set?
-                if (SourceRectangle.IsEmpty)
-                {
-                    // No, so draw the entire sprite texture
-                    spriteBatch.Draw(SpriteTexture, Position, null, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0f);
-                }
-                else
-                {
-                    // Yes, so just draw the specified SourceRect
-                    spriteBatch.Draw(SpriteTexture, Position, SourceRectangle, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0f);
                 }
             }
         }

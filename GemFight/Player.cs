@@ -14,6 +14,9 @@ namespace GemFight
             Ability2,
             Ability3
         }
+        protected State state;
+        protected int SpawnSpriteOnFrame;
+        protected bool AbilityCrated = false;
         protected GameHandler Handler = GameHandler.GetInstance();
         protected Game1 Game = Game1.GetInstance();
         protected readonly Board TheBoard = Board.GetInstance();
@@ -135,7 +138,7 @@ namespace GemFight
             }
             if (Health < 1)
             {
-                Game.winner = Enemy.ToString().Replace("GemFight.", "");
+                Game.Winner = Enemy.ToString().Replace("GemFight.", "");
                 Game.gameState = Game1.GameState.Win;
                 Handler.SwitchPlayer(Enemy);
             }
@@ -157,6 +160,24 @@ namespace GemFight
         public void CollideWith(Sprite other)
         {
 
+        }
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            // Do we have a texture? If not then there is nothing to draw...
+            if (SpriteTexture != null)
+            {
+                // Has a source rectangle been set?
+                if (SourceRectangle.IsEmpty)
+                {
+                    // No, so draw the entire sprite texture
+                    spriteBatch.Draw(SpriteTexture, Position, null, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0f);
+                }
+                else
+                {
+                    // Yes, so just draw the specified SourceRect
+                    spriteBatch.Draw(SpriteTexture, Position, SourceRectangle, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0f);
+                }
+            }
         }
     }
 }

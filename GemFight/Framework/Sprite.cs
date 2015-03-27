@@ -1,5 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Drawing;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace GemFight.Framework
 {
@@ -10,7 +14,6 @@ namespace GemFight.Framework
             this.SpriteTexture = spriteTexture;
             this.Position = position;
             Scale = 1;
-
         }
         public virtual float Scale { get; set; }
         public Texture2D SpriteTexture { get; set; }
@@ -65,6 +68,5 @@ namespace GemFight.Framework
         {
             spriteBatch.Draw(SpriteTexture, Position, null, Color.White, Rotation, Origin, new Vector2(Scale, Scale), SpriteEffect, 0f);
         }
-
     }
 }

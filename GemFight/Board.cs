@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GemFight.Framework;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,7 +16,7 @@ namespace GemFight
         /// Pos used to place cursers. Where the index goes up vertical.
         /// Pos[0] is 0,0. Pos[6] is 0,1.
         /// </summary>
-        public List<Vector2> Pos = new List<Vector2>(); 
+        public List<Vector2> Pos = new List<Vector2>();
         private static readonly Game1 Game = Game1.GetInstance();
         public const int YDistance = 94;
         public const int XDistance = 97;
@@ -64,7 +65,7 @@ namespace GemFight
             var rnd = new Random();
             foreach (var vector2 in _squares)
             {
-                Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("Gems.png"), vector2, rnd.Next(0,6)));
+                Game.ListOfGems.Add(new Gem(Game.Content.Load<Texture2D>("Gems.png"), vector2, rnd.Next(0, 6)));
             }
         }
     }

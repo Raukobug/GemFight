@@ -45,10 +45,7 @@ namespace GemFight
             {
                 _animation.Frames.Add(new Rectangle(_imageWidth * i, 0, _imageWidth, _imageHeight));
             }
-            _game.sound.Play();
-
-
-
+            _game.Sound.Play();
         }
 
         public override void Update(GameTime gameTime)
@@ -83,16 +80,17 @@ namespace GemFight
                     if (!_endAnimation)
                     {
                         _animation = new Animation(this);
-                        _animation.Delay = 20;
+                        _animation.Delay = 100;
                         for (int i = _frameNumber; i < _frameNumber * 2; i++)
                         {
                             _animation.Frames.Add(new Rectangle(_imageWidth * i, 0, _imageWidth, _imageHeight));
                         }
+                        _game.Camera.ShakeX = true;
                     }
                     if (_animation.LastFrame)
                     {
                         _game.AbilitiesRemoveAble.Add(this);
-                        
+
                     }
                     _endAnimation = true;
                 }
@@ -105,11 +103,12 @@ namespace GemFight
                     if (!_endAnimation)
                     {
                         _animation = new Animation(this);
-                        _animation.Delay = 20;
+                        _animation.Delay = 100;
                         for (int i = _frameNumber; i < _frameNumber * 2; i++)
                         {
                             _animation.Frames.Add(new Rectangle(_imageWidth * i, 0, _imageWidth, _imageHeight));
                         }
+                        _game.Camera.ShakeY = true;
                     }
                     if (_animation.LastFrame)
                     {
