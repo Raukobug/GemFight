@@ -91,10 +91,10 @@ namespace GemFight
             var screen = Screen.AllScreens.First(e => e.Primary);
             Window.IsBorderless = true;
             Window.Position = new Point(screen.Bounds.X, screen.Bounds.Y);
-            //Graphics.PreferredBackBufferWidth = 1920;
-            //Graphics.PreferredBackBufferHeight = 1080;
-            Graphics.PreferredBackBufferWidth = screen.Bounds.Width;
-            Graphics.PreferredBackBufferHeight = screen.Bounds.Height;
+            Graphics.PreferredBackBufferWidth = 1920;
+            Graphics.PreferredBackBufferHeight = 1080;
+            //Graphics.PreferredBackBufferWidth = screen.Bounds.Width;
+            //Graphics.PreferredBackBufferHeight = screen.Bounds.Height;
             Graphics.ApplyChanges();
 
             gameState = GameState.Intro;
@@ -188,15 +188,15 @@ namespace GemFight
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || GamePad.GetState(PlayerIndex.Two).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             // TODO: Add your update logic here
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-            {
-                foreach (var gem in ListOfGems)
-                {
-                    gem.Destroy();
-                }
-                Camera.ShakeY = true;
-                Camera.ShakeX = true;
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            //{
+            //    foreach (var gem in ListOfGems)
+            //    {
+            //        gem.Destroy();
+            //    }
+            //    Camera.ShakeY = true;
+            //    Camera.ShakeX = true;
+            //}
             switch (gameState)
             {
                 case GameState.Intro:
@@ -235,6 +235,7 @@ namespace GemFight
                     Player1.Update(gameTime);
                     Player2.Update(gameTime);
                     Camera.Shake(gameTime);
+                    Handler.Updater(gameTime);
                     break;
 
                 case GameState.Win:

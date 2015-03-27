@@ -64,6 +64,7 @@ namespace GemFight
                 if (ExtraTurn)
                 {
                     ExtraTurn = false;
+                    Handler.ExtraTurn = false;
                 }
                 else
                 {
@@ -210,6 +211,7 @@ namespace GemFight
             {
 
                 BlueGems = BlueGems - 10;
+                Handler.ExtraTurn = true;
                 ExtraTurn = true;
             }
         }

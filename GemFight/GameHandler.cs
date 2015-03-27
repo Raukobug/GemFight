@@ -16,7 +16,15 @@ namespace GemFight
         private bool _ableToMoveDown;
         private bool _ableToMoveLeft;
         private bool _ableToMoveRight;
+        private bool ExtraTurnActiv = false;
+        private int TimeToSwitch = 0;
+        private bool Switch = false;
 
+        public bool ExtraTurn
+        {
+            get { return ExtraTurnActiv; }
+            set { ExtraTurnActiv = true; }
+        }
         public bool AbleToMoveUp
         {
             get { return _ableToMoveUp; }
@@ -44,6 +52,26 @@ namespace GemFight
             return _instance ?? (_instance = new GameHandler());
         }
 
+        public void Updater(GameTime gameTime)
+        {
+            if (Switch)
+            {
+                if (TimeToSwitch == 0)
+                {
+                    if (_game.Player1.HasTurn)
+                    {
+                        _game.InputController1.Enabled = true;
+                    }
+                    else
+                    {
+                        _game.InputController2.Enabled = true;
+                    }
+                    Switch = false;
+                }
+                TimeToSwitch--;
+            }
+        }
+
         public void SwitchPlayer(Player player)
         {
             if (player.PlayerNumber == 1)
@@ -51,17 +79,19 @@ namespace GemFight
                 _game.Player2.HasTurn = true;
                 player.HasTurn = false;
                 _game.InputController1.Enabled = false;
-                _game.InputController2.Enabled = true;
+                _game.InputController2.Enabled = false;
                 player.Enemy.CursorSetup1();
             }
             else
             {
                 _game.Player1.HasTurn = true;
                 player.HasTurn = false;
-                _game.InputController1.Enabled = true;
+                _game.InputController1.Enabled = false;
                 _game.InputController2.Enabled = false;
                 player.Enemy.CursorSetup1();
             }
+            TimeToSwitch = 30;
+            Switch = true;
         }
 
         public void UpdateGems()
@@ -96,7 +126,7 @@ namespace GemFight
         public void AssignGem(Gem gem)
         {
             Player player;
-            if (_game.Player1.ExtraTurn == false || _game.Player2.ExtraTurn == false)
+            if (!ExtraTurnActiv)
             {
                 player = _game.Player1.HasTurn ? _game.Player2 : _game.Player1;
             }
